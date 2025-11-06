@@ -114,7 +114,7 @@ export function AboutSection() {
 
           {/* Right: portrait */}
           {about?.avatarUrl && (
-            <div className="mx-auto w-52 shrink-0 sm:w-64 md:w-80">
+            <div className="mx-auto w-full max-w-sm shrink-0 sm:max-w-md md:w-80">
               <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
                 <Image
                   src={about.avatarUrl}
