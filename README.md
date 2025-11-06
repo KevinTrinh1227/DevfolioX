@@ -2,7 +2,7 @@
 
 # ✨ DevfolioX
 
-A minimal, user-friendly dev/personal portfolio template that integrates with numerous platforms and offers genuinely useful functionality. Built with **Next.js** and **Tailwind CSS** — minimal UI, easy setup, and plenty of power under the hood.
+A minimal, user-friendly, responsive dev/personal portfolio template that integrates with numerous platforms and offers genuinely useful functionality. Built with **Next.js** and **Tailwind CSS** — minimal UI, easy setup, and plenty of power under the hood.
 
 [![Downloads](https://img.shields.io/github/downloads/KevinTrinh1227/devfoliox/total?style=for-the-badge&logo=github)](#)
 [![Stars](https://img.shields.io/github/stars/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
