@@ -4,8 +4,9 @@
 
 A minimal, user-friendly dev/personal portfolio template that integrates with numerous platforms and offers genuinely useful functionality. Built with **Next.js** and **Tailwind CSS** — minimal UI, easy setup, and plenty of power under the hood.
 
-[![Maintenance](https://img.shields.io/badge/Maintenance-Actively%20maintained-34d058?style=for-the-badge&logo=github)](#)
-[![Last Updated](https://img.shields.io/github/last-commit/KevinTrinh1227/devfoliox?style=for-the-badge&logo=git)](#)
+[![Downloads](https://img.shields.io/github/downloads/KevinTrinh1227/devfoliox/total?style=for-the-badge&logo=github)](#)
+[![Stars](https://img.shields.io/github/stars/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
+[![Forks](https://img.shields.io/github/forks/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 [![Latest Release](https://img.shields.io/github/v/release/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 
 <a href="https://kevintrinh.dev" target="_blank">
@@ -28,6 +29,7 @@ A minimal, user-friendly dev/personal portfolio template that integrates with nu
 </div>
 
 ---
+
 
 <p align="center"><strong>Table of Contents</strong></p>
 <p align="center">
