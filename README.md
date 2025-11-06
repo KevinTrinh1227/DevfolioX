@@ -8,9 +8,9 @@
 
   > DevfolioX is built around a “less is better” philosophy: remove clutter, focus on clarity, and automate as much as possible so you spend more time building and less time maintaining your site.
 
-  <p align="center">
-    <img src="https://placehold.co/600x400" alt="DevfolioX demo screenshot" />
-  </p>
+  <a href="https://kevintrinh.dev" target="_blank">
+    <img alt="Screen Shot from 10-03-2023 of landing page." width="850px" src="https://github.com/KevinTrinh1227/DevfolioX/blob/main/public/images/devfoliox_demo_1.gif">
+  </a>
 
   <details>
     <summary>View more screenshots</summary>
