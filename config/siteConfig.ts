@@ -11,11 +11,11 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/in/YOUR_LINKEDIN_SLUG",
     devto: "https://dev.to/YOUR_DEVTO_HANDLE",
     medium: "https://medium.com/@YOUR_MEDIUM_HANDLE",
-    youtube: "https://www.youtube.com/@YOUR_CHANNEL",
-    email: "mailto:you@example.com",
+    youtube: "https://www.youtube.com/@CoderTrinh",
+    email: "you@example.com", // <-- no "mailto:" here
     handshake: "",
     telegram: "",
-    discord: "",
+    discord: "https://discord.gg/YOUR_DISCORD_LINK",
   },
 
   repo: {
@@ -38,6 +38,7 @@ export const siteConfig = {
     projects: true,
     blog: true,
     youtube: true,
+    certifications: true, // <-- add this
     codingStats: true,
     contact: true,
     resume: true,
@@ -51,7 +52,7 @@ export const siteConfig = {
   about: {
     intro: [
       "I am currently an undergraduate student at the University of Houston pursuing a B.S. in Computer Science. I recently built a full stack app used by over 100+ users that allows UH students to get insights and AI schedule recommendations on their degree plan.",
-      "I have a profound interest in various types of software development, including machine learning, operating systems, and full-stack development. I'm a huge enthusiast of desk setups and PCs. In my free time, I enjoy playing chess, thrifting, video games, strumming my guitar, and trying local foods.",
+      "I have interests in various types of software development, including machine learning, operating systems, and full-stack development. I'm a huge enthusiast of desk setups and PCs. In my free time, I enjoy playing chess, thrifting, and video games.",
     ],
     currentlyLookingFor:
       "Internships / early-career SWE roles and open source collaboration.",
@@ -67,14 +68,11 @@ export const siteConfig = {
   },
 
   resume: {
-    items: [
-      // later: you can add objects here for Resume / CV if you want
-    ],
+    items: [],
   },
 
   sponsor: {
     enabled: true,
-    // You can swap this for GitHub Sponsors, Patreon, Ko-fi, etc.
     url: "https://github.com/sponsors/kevintrinh1227",
   },
 };

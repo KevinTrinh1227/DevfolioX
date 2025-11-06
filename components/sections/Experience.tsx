@@ -2,19 +2,18 @@
 "use client";
 
 import { useState } from "react";
-import { FileText, FileSignature, ChevronRight } from "lucide-react";
+import { FileText, Download } from "lucide-react";
 import { experience } from "../../config/experience";
 
 export function ExperienceSection() {
   if (!experience.length) return null;
 
-  // default to most recent (last item)
-  const defaultActiveId = experience[experience.length - 1]?.id;
+  // default to first item
+  const defaultActiveId = experience[0]?.id;
   const [activeId, setActiveId] = useState<string>(defaultActiveId);
 
   const activeItem =
-    experience.find((item) => item.id === activeId) ??
-    experience[experience.length - 1];
+    experience.find((item) => item.id === activeId) ?? experience[0];
 
   return (
     <section id="experience" className="py-16 scroll-mt-12">
@@ -25,10 +24,10 @@ export function ExperienceSection() {
 
         <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h3 className="text-2xl font-semibold sm:text-3xl">
-            Past internships and roles.
+            My current/past relevant experience.
           </h3>
 
-          {/* Resume / CV buttons */}
+          {/* Resume buttons */}
           <div className="flex flex-wrap gap-3 text-xs sm:text-sm">
             <a
               href="#resume"
@@ -41,8 +40,8 @@ export function ExperienceSection() {
               href="#resume"
               className="inline-flex items-center gap-2 rounded-md border border-white/20 px-4 py-2 text-xs text-foreground transition hover:border-accent hover:bg-white/5"
             >
-              <FileSignature className="h-4 w-4" />
-              <span>View CV</span>
+              <Download className="h-4 w-4" />
+              <span>Download Resume</span>
             </a>
           </div>
         </div>
@@ -114,24 +113,12 @@ export function ExperienceSection() {
                     key={idx}
                     className="flex items-start gap-2 leading-relaxed"
                   >
-                    <ChevronRight className="mt-[3px] h-3 w-3 text-accent" />
+                    {/* Filled triangle pointing to the sentence */}
+                    <span className="mt-[5px] inline-block h-0 w-0 border-y-[4px] border-y-transparent border-l-[7px] border-l-accent" />
                     <span>{line}</span>
                   </li>
                 ))}
               </ul>
-            )}
-
-            {activeItem.technologies && activeItem.technologies.length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {activeItem.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-white/10 px-2 py-1 text-[12px] text-muted-foreground"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
             )}
           </article>
         </div>

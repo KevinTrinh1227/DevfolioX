@@ -11,7 +11,9 @@ const navItems: { id: keyof typeof siteConfig.sections; label: string }[] = [
   { id: "education", label: "Education" },
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
-  { id: "contact", label: "Contact" },
+  { id: "blog", label: "Blogs" },
+  { id: "youtube", label: "YouTube" },
+  { id: "certifications", label: "Certifications" },
 ];
 
 export function Navbar() {
@@ -20,6 +22,8 @@ export function Navbar() {
   const enabledNavItems = navItems.filter(
     (item) => siteConfig.sections[item.id]
   );
+
+  const showSubtitle = enabledNavItems.length <= 5;
 
   const handleNavClick = () => {
     setIsOpen(false);
@@ -34,13 +38,15 @@ export function Navbar() {
             <span className="text-base font-semibold tracking-tight sm:text-lg">
               kevintrinh.dev
             </span>
-            <span className="hidden text-[11px] text-muted-foreground sm:inline sm:text-xs">
-              {siteConfig.title}
-            </span>
+            {showSubtitle && (
+              <span className="hidden text-[11px] text-muted-foreground lg:inline lg:text-sm">
+                {siteConfig.title}
+              </span>
+            )}
           </Link>
 
           {/* Desktop nav */}
-          <nav className="ml-4 hidden flex-1 justify-end gap-3 text-[11px] text-muted-foreground sm:flex md:gap-4 md:text-xs">
+          <nav className="ml-4 hidden flex-1 justify-end gap-1.5 text-xs text-muted-foreground sm:flex md:gap-2 md:text-sm">
             {enabledNavItems.map((item) => (
               <a
                 key={item.id}
@@ -53,13 +59,15 @@ export function Navbar() {
           </nav>
 
           {/* Right side: My Resume shortcut (desktop / tablet only) */}
-          <div className="ml-4 hidden items-center gap-3 text-[11px] sm:flex md:text-xs">
-            <a
-              href="#resume"
-              className="rounded-full border border-white/20 px-3.5 py-1.5 text-[11px] font-medium text-muted-foreground underline-offset-2 transition hover:border-accent hover:bg-white/5 hover:text-foreground md:text-xs"
-            >
-              My Resume
-            </a>
+          <div className="ml-4 hidden items-center gap-2 text-xs sm:flex md:text-sm">
+            {siteConfig.sections.resume && (
+              <a
+                href="#resume"
+                className="rounded-full border border-white/20 px-3.5 py-1.5 text-xs font-medium text-muted-foreground underline-offset-2 transition hover:border-accent hover:bg-white/5 hover:text-foreground md:text-sm"
+              >
+                My Resume
+              </a>
+            )}
           </div>
 
           {/* Mobile menu toggle */}
@@ -76,7 +84,7 @@ export function Navbar() {
         {/* Mobile dropdown menu */}
         {isOpen && (
           <div className="pb-4 sm:hidden">
-            <nav className="flex flex-col gap-2 text-[13px] text-muted-foreground">
+            <nav className="flex flex-col gap-1 text-sm text-muted-foreground">
               {enabledNavItems.map((item) => (
                 <a
                   key={item.id}

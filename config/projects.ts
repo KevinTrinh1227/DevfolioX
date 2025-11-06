@@ -41,6 +41,40 @@ export type ProjectItem = {
 
 export const projects: ProjectItem[] = [
   {
+    id: "reactfolio",
+    name: "Reactfolio",
+    summary:
+      "A React.js front-end portfolio template designed for developers who want a clean and flexible personal site.",
+    description: [
+      "Reactfolio is a customizable portfolio template built with React and modern tooling, focused on a smooth UX and clean, responsive layout.",
+      "It’s structured for easy editing, so students and developers can quickly plug in their own projects, experience, and contact info.",
+    ],
+    start: "Sep 2023",
+    end: "Dec 2023",
+    technologies: ["React", "JavaScript", "CSS"],
+    featured: true,
+    githubStars: 35,
+    githubForks: 6,
+    downloads: 90,
+    links: [
+      {
+        label: "Live Demo",
+        href: "https://your-reactfolio-demo-url.com",
+        type: "live",
+      },
+      {
+        label: "Source",
+        href: "https://github.com/yourname/reactfolio",
+        type: "github",
+      },
+      {
+        label: "Docs",
+        href: "https://github.com/yourname/reactfolio#readme",
+        type: "docs",
+      },
+    ],
+  },
+  {
     id: "devfoliox",
     name: "DevfolioX",
     summary:
@@ -70,6 +104,62 @@ export const projects: ProjectItem[] = [
       {
         label: "Docs",
         href: "https://github.com/yourname/devfoliox#readme",
+        type: "docs",
+      },
+    ],
+  },
+  {
+    id: "prize-picks-predictions",
+    name: "Prize-Picks-Predictions",
+    summary:
+      "A Flask web app that uses machine learning models to generate PrizePicks-style prediction insights.",
+    description: [
+      "Prize-Picks-Predictions ingests historical player and game data, runs it through trained machine learning models, and surfaces simple over/under style suggestions.",
+      "The app focuses on interpretability and clean UI so users can quickly see model outputs, confidence levels, and recent performance.",
+    ],
+    start: "Aug 2024",
+    end: "Present",
+    technologies: ["Python", "Flask", "Pandas", "scikit-learn"],
+    githubStars: 18,
+    githubForks: 4,
+    downloads: 40,
+    links: [
+      {
+        label: "Source",
+        href: "https://github.com/yourname/Prize-Picks-Predictions",
+        type: "github",
+      },
+      {
+        label: "Docs",
+        href: "https://github.com/yourname/Prize-Picks-Predictions#readme",
+        type: "docs",
+      },
+    ],
+  },
+  {
+    id: "hycord-client",
+    name: "Hycord-Client",
+    summary:
+      "A Python Discord client that integrates Minecraft player stats and server data into rich Discord embeds.",
+    description: [
+      "Hycord-Client connects Discord with Minecraft servers, pulling player stats, session history, and game events into a unified dashboard inside Discord.",
+      "It uses caching and background tasks to reduce API spam while keeping stats, leaderboards, and activity summaries up to date.",
+    ],
+    start: "May 2024",
+    end: "Present",
+    technologies: ["Python", "discord.py", "Redis", "REST APIs"],
+    githubStars: 22,
+    githubForks: 5,
+    downloads: 50,
+    links: [
+      {
+        label: "Source",
+        href: "https://github.com/yourname/Hycord-Client",
+        type: "github",
+      },
+      {
+        label: "Docs",
+        href: "https://github.com/yourname/Hycord-Client#readme",
         type: "docs",
       },
     ],

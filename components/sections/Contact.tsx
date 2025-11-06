@@ -10,16 +10,18 @@ import {
   Github,
   Linkedin,
   Youtube,
+  FileText,
 } from "lucide-react";
 
 export function ContactSection() {
   const socials = siteConfig.socials ?? {};
   const primaryEmail = socials.email;
   const discord = socials.discord;
-  const telegram = socials.telegram;
+  const telegram = socials.telegram; // kept, but no longer used below
   const github = socials.github;
   const linkedin = socials.linkedin;
   const youtube = socials.youtube;
+  const devto = socials.devto;
 
   const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle");
 
@@ -41,9 +43,9 @@ export function ContactSection() {
         </h3>
 
         <p className="mt-4 text-sm text-muted-foreground sm:text-base">
-          Reach out about internships, full-time roles, collaborations, or
-          questions about any of my projects. I try to keep replies focused and
-          intentional, in the same spirit as this portfolio.
+          Feel free to reach out to me about job opportunities, collaborations,
+          questions, or anything related to my work. You can contact me using my
+          email or by filling out the form below to ping me.
         </p>
 
         <div className="mt-8 space-y-6">
@@ -130,7 +132,7 @@ export function ContactSection() {
                 required
                 rows={4}
                 className="w-full rounded-md border border-white/15 bg-transparent px-2 py-2 text-sm text-foreground outline-none ring-0 placeholder:text-xs placeholder:text-muted-foreground/60 focus:border-accent"
-                placeholder="Write a short message..."
+                placeholder="Write a short message and include your preferred contact info so I know how to get back to you."
               />
             </div>
 
@@ -162,11 +164,11 @@ export function ContactSection() {
 
           <div className="rounded-lg border border-white/10 bg-white/5 p-4 text-sm">
             <p className="text-xs font-medium text-foreground sm:text-sm">
-              Other ways to reach me
+              More of my work & socials
             </p>
             <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
-              Prefer not to use a form? Here are a few other places where you
-              can reach me.
+              Quick links to my profiles and other places where I share
+              projects, updates, and resources.
             </p>
 
             <div className="mt-4 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
@@ -184,16 +186,7 @@ export function ContactSection() {
                   icon={<MessageCircle className="h-4 w-4" />}
                   label="Discord"
                   href={discord}
-                  detail="DM / contact server"
-                />
-              )}
-
-              {telegram && (
-                <ContactLink
-                  icon={<Send className="h-4 w-4" />}
-                  label="Telegram"
-                  href={telegram}
-                  detail="@username"
+                  detail="Server / DM"
                 />
               )}
 
@@ -212,6 +205,15 @@ export function ContactSection() {
                   label="LinkedIn"
                   href={linkedin}
                   detail="Professional profile"
+                />
+              )}
+
+              {devto && (
+                <ContactLink
+                  icon={<FileText className="h-4 w-4" />}
+                  label="Dev.to"
+                  href={devto}
+                  detail="Articles & posts"
                 />
               )}
 

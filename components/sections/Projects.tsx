@@ -1,4 +1,7 @@
 // components/sections/Projects.tsx
+"use client";
+
+import { useState } from "react";
 import {
   Github,
   Globe,
@@ -8,6 +11,8 @@ import {
   ExternalLink,
   Star,
   GitFork,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import {
   projects,
@@ -17,6 +22,10 @@ import {
 
 export function ProjectsSection() {
   if (!projects.length) return null;
+
+  const [showAll, setShowAll] = useState(false);
+  const visibleProjects = showAll ? projects : projects.slice(0, 6);
+  const showToggle = projects.length > 6;
 
   return (
     <section id="projects" className="py-16 scroll-mt-12">
@@ -30,7 +39,7 @@ export function ProjectsSection() {
         </h3>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project: ProjectItem) => {
+          {visibleProjects.map((project: ProjectItem) => {
             const hasStats =
               project.githubStars !== undefined ||
               project.githubForks !== undefined ||
@@ -125,7 +134,7 @@ export function ProjectsSection() {
                           href={link.href}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-transparent px-3 py-1.5 text-[11px] sm:text-xs text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+                          className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-transparent px-3 py-1.5 text-[11px] text-muted-foreground transition-colors hover:border-accent hover:text-foreground sm:text-xs"
                         >
                           {icon}
                           <span>{link.label}</span>
@@ -138,6 +147,24 @@ export function ProjectsSection() {
             );
           })}
         </div>
+
+        {/* View more / Show less button */}
+        {showToggle && (
+          <div className="mt-6 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAll((prev) => !prev)}
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/80 transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            >
+              <span>{showAll ? "Show less" : "View more"}</span>
+              {showAll ? (
+                <ChevronUp className="h-4 w-4" />
+              ) : (
+                <ChevronDown className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

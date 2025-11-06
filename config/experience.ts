@@ -14,18 +14,18 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    id: "swe-intern-xyz",
-    role: "Software Engineering Intern",
-    company: "XYZ Company",
-    location: "Remote",
+    id: "research-intern-mcnair",
+    role: "Research Intern",
+    company: "STMU McNair",
+    location: "San Antonio, TX",
     type: "internship",
     start: "Jun 2024",
     end: "Aug 2024",
     description: [
-      "Implemented full-stack features for an internal analytics dashboard using Next.js, Node.js, and PostgreSQL.",
-      "Refactored API endpoints and database queries to reduce average dashboard load time by ~30%.",
-      "Collaborated with a senior engineer on code reviews, improving test coverage and type safety across the codebase.",
-      "Worked closely with a product manager to refine requirements and quickly ship small, high-impact improvements.",
+      "Conducted thorough undergraduate research on compiler design and high-level to low-level language translation.",
+      "Developed a lightweight translator by building a parser, lexer, and semantic analyzer module to convert custom code into assembly language for a virtual machine.",
+      "Collaborated closely with mentors to refine development skills and deepen understanding of language design principles and compiler design methodologies.",
+      "Presented research and project outcomes at multiple universities, demonstrating language processing and compiler design expertise.",
     ],
     technologies: [
       "Next.js",

@@ -1,0 +1,41 @@
+// config/blog.ts
+export type BlogPlatform = "devto" | "medium";
+
+export type BlogPost = {
+  id: string;
+  title: string;
+  summary?: string;
+  url: string;
+  platform: BlogPlatform;
+  date?: string;
+  readTime?: string;
+  tags?: string[];
+  featured?: boolean;
+};
+
+export const blogPosts: BlogPost[] = [
+  {
+    id: "reactfolio-deep-dive",
+    title: "Building and Deploying a React Portfolio from Scratch",
+    summary:
+      "A walkthrough of how I planned, built, and deployed my React portfolio, including routing, styling, and deployment tips.",
+    url: "https://dev.to/your-handle/reactfolio-deep-dive",
+    platform: "devto",
+    date: "Jan 2025",
+    readTime: "10 min read",
+    tags: ["React", "Portfolio", "Frontend"],
+    featured: true,
+  },
+  {
+    id: "flask-ml-predictions",
+    title: "Serving Machine Learning Models with Flask",
+    summary:
+      "How I wired up a small ML model behind a Flask API, with basic validation, logging, and deployment notes.",
+    url: "https://medium.com/@your-handle/flask-ml-predictions",
+    platform: "medium",
+    date: "Dec 2024",
+    readTime: "8 min read",
+    tags: ["Python", "Flask", "Machine Learning"],
+  },
+  // add more...
+];
