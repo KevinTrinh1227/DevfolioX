@@ -95,16 +95,14 @@ export function AboutSection() {
               ))}
             </div>
 
-            <Tooltip content="Open a detailed overview about me, my work, and stats.">
-              <button
-                type="button"
-                onClick={() => setIsMoreOpen(true)}
-                className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors duration-200 hover:bg-white/10 sm:text-sm"
-              >
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>More about me, if you&apos;re curious.</span>
-              </button>
-            </Tooltip>
+            <button
+              type="button"
+              onClick={() => setIsMoreOpen(true)}
+              className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors duration-200 hover:bg-white/10 sm:text-sm"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              <span>More about me, if you&apos;re curious.</span>
+            </button>
 
             {tools.length > 0 && (
               <div className="mt-4 text-xs sm:text-sm">
