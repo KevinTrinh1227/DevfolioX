@@ -64,16 +64,26 @@ export function AboutSection() {
               ))}
             </div>
 
+            {/* More about me button (subtle white overlay on hover) */}
+            <button
+              type="button"
+              className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors transition-background duration-200 hover:bg-white/10 sm:text-sm"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              <span>More about me, if you&apos;re curious.</span>
+            </button>
+
+            {/* Tech stack label + badges directly after intro/button */}
             {tools.length > 0 && (
-              <div className="mt-6 text-xs">
-                <p className="mb-2 text-[11px] font-medium text-foreground">
-                  Some technologies I&apos;ve worked with recently:
+              <div className="mt-4 text-xs sm:text-sm">
+                <p className="text-xs font-semibold text-muted-foreground sm:text-sm">
+                  Recently Used Technologies
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap items-center gap-2">
                   {tools.map((tool) => (
                     <span
                       key={tool}
-                      className="rounded-full border border-white/10 px-2 py-1 text-[11px] text-muted-foreground"
+                      className="rounded-full border border-white/10 px-2 py-1 text-xs text-muted-foreground transition-transform transition-colors duration-200 hover:-translate-y-[1px] hover:border-accent/60 hover:bg-white/5"
                     >
                       {tool}
                     </span>
@@ -84,9 +94,9 @@ export function AboutSection() {
 
             {/* Social links as compact icon buttons */}
             {socialLinks.length > 0 && (
-              <div className="mt-6 text-xs">
-                <p className="mb-2 text-[11px] font-medium text-foreground">
-                  You can also find me here:
+              <div className="mt-6 text-xs sm:text-sm">
+                <p className="mb-2 text-xs font-semibold text-muted-foreground sm:text-sm">
+                  Social Quick Links
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {socialLinks.map((social) => {
@@ -100,7 +110,7 @@ export function AboutSection() {
                         href={social.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-md border border-white/20 bg-transparent px-3 py-1.5 text-[11px] text-foreground transition hover:border-accent hover:bg-white/5"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-white/20 bg-transparent px-3 py-1.5 text-xs text-foreground transition hover:border-accent hover:bg-white/5"
                       >
                         {icon}
                         <span>{social.label}</span>
@@ -115,13 +125,13 @@ export function AboutSection() {
           {/* Right: portrait */}
           {about?.avatarUrl && (
             <div className="mx-auto w-full max-w-sm shrink-0 sm:max-w-md md:w-80">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+              <div className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-transform duration-200 hover:-translate-y-[2px] hover:border-accent/60">
                 <Image
                   src={about.avatarUrl}
                   alt={siteConfig.name}
                   width={800}
                   height={800}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
                 />
               </div>
             </div>

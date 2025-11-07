@@ -41,27 +41,23 @@ export function EducationSection() {
             return (
               <article
                 key={item.id}
-                className="rounded-lg border border-white/10 bg-white/5 p-4 text-sm text-muted-foreground sm:flex sm:gap-1 sm:text-base"
+                className="group rounded-lg border border-white/10 bg-white/5 p-4 text-sm text-muted-foreground transition-transform transition-colors duration-200 hover:-translate-y-[1px] hover:border-accent/60 hover:bg-white/[0.08] sm:flex sm:gap-1 sm:text-base"
               >
-                {/* Optional left-side image */}
                 {hasImage && (
-                  <div className="mb-3 w-full overflow-hidden rounded-md bg-transparent sm:mb-0 sm:w-40 sm:flex-shrink-0">
+                  <div className="mb-3 flex justify-center sm:mb-0 sm:w-40 sm:flex-shrink-0 sm:block">
                     <img
                       src={item.imageUrl as string}
                       alt={item.school}
-                      className="h-full w-full object-cover"
+                      className="h-16 w-16 rounded-md object-cover shadow-sm transition-transform duration-300 ease-out group-hover:scale-105 group-hover:shadow-lg sm:h-full sm:w-full"
                     />
                   </div>
                 )}
 
-                {/* Divider between image and details (desktop only) */}
                 {hasImage && (
                   <div className="hidden sm:mx-1 sm:block sm:w-px sm:bg-white/10" />
                 )}
 
-                {/* Details */}
                 <div className="flex-1">
-                  {/* Top row: school (left) + dates/location (right) */}
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <h4 className="text-lg font-semibold text-foreground sm:text-xl">
@@ -109,7 +105,6 @@ export function EducationSection() {
                     </div>
                   </div>
 
-                  {/* Bottom: awards, activities, coursework (only if present) */}
                   <div className="mt-4 space-y-2 text-xs text-muted-foreground sm:text-sm">
                     {awardsText && (
                       <p>

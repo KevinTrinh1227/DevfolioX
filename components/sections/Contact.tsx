@@ -45,7 +45,7 @@ export function ContactSection() {
         <p className="mt-4 text-sm text-muted-foreground sm:text-base">
           Feel free to reach out to me about job opportunities, collaborations,
           questions, or anything related to my work. You can contact me using my
-          email or by filling out the form below to ping me.
+          email or by filling out the form below to reach me quicker.
         </p>
 
         <div className="mt-8 space-y-6">
@@ -186,7 +186,7 @@ export function ContactSection() {
                   icon={<MessageCircle className="h-4 w-4" />}
                   label="Discord"
                   href={discord}
-                  detail="Server / DM"
+                  detail="Copy my Discord tag"
                 />
               )}
 
@@ -204,7 +204,7 @@ export function ContactSection() {
                   icon={<Linkedin className="h-4 w-4" />}
                   label="LinkedIn"
                   href={linkedin}
-                  detail="Professional profile"
+                  detail="My professional profile"
                 />
               )}
 
@@ -222,7 +222,7 @@ export function ContactSection() {
                   icon={<Youtube className="h-4 w-4" />}
                   label="YouTube"
                   href={youtube}
-                  detail="Channel"
+                  detail="View my channel"
                 />
               )}
             </div>

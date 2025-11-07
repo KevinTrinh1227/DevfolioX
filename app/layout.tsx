@@ -4,8 +4,23 @@ import { siteConfig } from "../config/siteConfig";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  title: siteConfig.name + " – " + siteConfig.title,
+  title: `${siteConfig.name} – ${siteConfig.title}`,
   description: siteConfig.tagline,
+  icons: {
+    icon: "/images/favicon.ico",
+  },
+  openGraph: {
+    title: `${siteConfig.name} – ${siteConfig.title}`,
+    description: siteConfig.tagline,
+    url: "https://kevintrinh.dev",
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} – ${siteConfig.title}`,
+    description: siteConfig.tagline,
+  },
 };
 
 export default function RootLayout({
@@ -15,8 +30,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Analytics />
       <body className="min-h-screen bg-background text-foreground antialiased">
+        <Analytics />
         {children}
       </body>
     </html>

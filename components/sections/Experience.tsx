@@ -2,18 +2,19 @@
 "use client";
 
 import { useState } from "react";
-import { FileText, Download } from "lucide-react";
+import { FileText } from "lucide-react";
 import { experience } from "../../config/experience";
 
 export function ExperienceSection() {
   if (!experience.length) return null;
 
-  // default to first item
   const defaultActiveId = experience[0]?.id;
   const [activeId, setActiveId] = useState<string>(defaultActiveId);
 
   const activeItem =
     experience.find((item) => item.id === activeId) ?? experience[0];
+
+  const resumeHref = "/resume.pdf";
 
   return (
     <section id="experience" className="py-16 scroll-mt-12">
@@ -27,28 +28,22 @@ export function ExperienceSection() {
             My current/past relevant experience.
           </h3>
 
-          {/* Resume buttons */}
           <div className="flex flex-wrap gap-3 text-xs sm:text-sm">
             <a
-              href="#resume"
-              className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-xs font-medium text-white transition hover:bg-accent/90"
+              href={resumeHref}
+              download
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-xs font-medium text-white transition-transform transition-colors hover:-translate-y-[1px] hover:bg-accent/90 sm:text-sm"
             >
               <FileText className="h-4 w-4" />
-              <span>View Resume</span>
-            </a>
-            <a
-              href="#resume"
-              className="inline-flex items-center gap-2 rounded-md border border-white/20 px-4 py-2 text-xs text-foreground transition hover:border-accent hover:bg-white/5"
-            >
-              <Download className="h-4 w-4" />
-              <span>Download Resume</span>
+              <span>My Resume</span>
             </a>
           </div>
         </div>
 
-        {/* Sidebar + details, no outer card */}
         <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-start">
-          {/* Left: roles list (slightly narrower) */}
+          {/* Left: roles list */}
           <div className="w-full border-b border-white/10 pb-4 md:w-60 md:border-b-0 md:pb-0 md:pr-4">
             <ul className="space-y-1">
               {experience.map((item) => {
@@ -58,15 +53,15 @@ export function ExperienceSection() {
                     <button
                       type="button"
                       onClick={() => setActiveId(item.id)}
-                      className="w-full rounded-md px-3 py-2.5 text-left transition hover:bg-white/5"
+                      className="group w-full rounded-md px-3 py-2.5 text-left transition-colors hover:bg-white/5"
                     >
                       <div className="flex items-center gap-2">
                         <div className="flex-1">
                           <p
                             className={
                               isActive
-                                ? "text-base font-semibold text-accent"
-                                : "text-base font-semibold text-foreground"
+                                ? "text-base font-semibold text-accent/80"
+                                : "text-base font-semibold text-foreground group-hover:text-accent/60"
                             }
                           >
                             {item.company}
@@ -76,10 +71,11 @@ export function ExperienceSection() {
                           </p>
                         </div>
 
-                        {/* Right-side indicator bar (only active) */}
                         <div
-                          className={`h-10 w-[2px] rounded-full transition ${
-                            isActive ? "bg-accent" : "bg-transparent"
+                          className={`h-10 w-[2px] rounded-full transition-all duration-200 ${
+                            isActive
+                              ? "bg-accent"
+                              : "bg-transparent group-hover:bg-accent/40"
                           }`}
                         />
                       </div>
@@ -90,7 +86,7 @@ export function ExperienceSection() {
             </ul>
           </div>
 
-          {/* Right: details with vertical divider on this side */}
+          {/* Right: details (no hover motion) */}
           <article className="flex-1 border-t border-white/10 pt-4 text-sm text-muted-foreground md:border-t-0 md:border-l md:border-white/10 md:pl-4 md:pt-0">
             <div className="flex flex-col justify-between gap-2 sm:flex-row">
               <div>
@@ -113,7 +109,6 @@ export function ExperienceSection() {
                     key={idx}
                     className="flex items-start gap-2 leading-relaxed"
                   >
-                    {/* Filled triangle pointing to the sentence */}
                     <span className="mt-[5px] inline-block h-0 w-0 border-y-[4px] border-y-transparent border-l-[7px] border-l-accent" />
                     <span>{line}</span>
                   </li>

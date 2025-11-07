@@ -1,8 +1,8 @@
 // components/Footer.tsx
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { siteConfig } from "../config/siteConfig";
 import {
-  LayoutTemplate,
   Heart,
   Github,
   Linkedin,
@@ -75,7 +75,13 @@ export function Footer() {
         {/* Left: site + repo info */}
         <div className="space-y-3 text-center sm:text-left">
           <div className="flex items-center justify-center gap-2 sm:justify-start">
-            <LayoutTemplate className="h-6 w-6 text-accent" />
+            <Image
+              src="/images/favicon.png"
+              alt="kevintrinh.dev logo"
+              width={24}
+              height={24}
+              className="rounded-sm"
+            />
             <span className="text-lg font-semibold text-accent sm:text-xl">
               kevintrinh.dev
             </span>
@@ -84,12 +90,21 @@ export function Footer() {
           <div className="space-y-2 text-sm sm:text-base">
             {repo.lastUpdated && (
               <p className="text-muted-foreground">
-                Portfolio last updated: {repo.lastUpdated}
+                Portfolio updated: {repo.lastUpdated} (
+                <a
+                  href={repo.url ?? "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-accent hover:text-accent/80"
+                >
+                  9a8vbf6a
+                </a>
+                )
               </p>
             )}
 
             <p className="text-muted-foreground">
-              Quick links to more of my work and profiles:
+              Use the quick links below to access my socials.
             </p>
 
             {socialLinks.length > 0 && (
@@ -137,7 +152,7 @@ export function Footer() {
           </div>
 
           <p className="mt-2 text-sm text-muted-foreground sm:text-base">
-            Want to collaborate or contribute? Visit my GitHub!
+            This portfolio site is using DevfolioX and powered by Vercel.
           </p>
 
           <p className="text-xs text-muted-foreground sm:text-sm">

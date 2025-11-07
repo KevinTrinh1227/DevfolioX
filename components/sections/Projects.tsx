@@ -13,6 +13,7 @@ import {
   GitFork,
   ChevronDown,
   ChevronUp,
+  Info,
 } from "lucide-react";
 import {
   projects,
@@ -48,24 +49,81 @@ export function ProjectsSection() {
             return (
               <article
                 key={project.id}
-                className="flex flex-col rounded-lg border border-white/10 bg-white/5 p-4 text-sm transition-transform transition-colors transition-shadow hover:-translate-y-[2px] hover:border-accent/70 hover:bg-white/10 hover:shadow-md"
+                className="group flex flex-col rounded-lg border border-white/10 bg-white/5 p-4 text-sm transition-transform transition-colors transition-shadow hover:-translate-y-[2px] hover:border-accent/70 hover:bg-white/10 hover:shadow-md"
               >
-                {/* Top: title + dates stacked */}
-                <div className="flex flex-col gap-1">
+                {/* Header: title + info icon button */}
+                <div className="flex items-start justify-between gap-2">
                   <h4 className="text-lg font-semibold text-foreground">
                     {project.name}
                   </h4>
-                  <p className="text-xs text-muted-foreground">
-                    {project.start} - {project.end}
-                  </p>
+                  <button
+                    type="button"
+                    className="inline-flex h-7 w-7 items-center justify-center text-accent/80 transition hover:scale-105 hover:text-accent"
+                  >
+                    <Info className="h-4 w-4" />
+                  </button>
                 </div>
 
-                {/* Small separator under header */}
+                {/* Separator under header */}
                 <div className="mt-2 h-px w-full bg-white/10" />
 
-                {/* GitHub stats row (centered) */}
+                {/* Middle content: date + description + tools */}
+                <div className="mt-3 flex-1 space-y-2">
+                  <p className="text-[11px] text-muted-foreground">
+                    {project.start} - {project.end}
+                  </p>
+
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    {project.description && project.description.length > 0 ? (
+                      project.description.map((para: string, idx: number) => (
+                        <p key={idx}>{para}</p>
+                      ))
+                    ) : (
+                      <p>{project.summary}</p>
+                    )}
+                  </div>
+
+                  {project.technologies && project.technologies.length > 0 && (
+                    <div className="mt-1 flex flex-wrap gap-1.5">
+                      {project.technologies.map((tech: string) => (
+                        <span
+                          key={tech}
+                          className="rounded-full border border-white/10 px-2 py-1 text-[12px] text-muted-foreground"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {(project.links && project.links.length > 0) || hasStats ? (
+                  <div className="mt-2 h-px w-full bg-white/10" />
+                ) : null}
+
+                {project.links && project.links.length > 0 && (
+                  <div className="mt-2 flex flex-wrap justify-center gap-2 text-xs sm:text-sm">
+                    {project.links.map((link: ProjectLink) => {
+                      const icon = getLinkIcon(link.type);
+                      return (
+                        <a
+                          key={`${project.id}-${link.label}`}
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-transparent px-3 py-1.5 text-[11px] text-muted-foreground transition-colors hover:border-accent hover:text-foreground sm:text-xs"
+                        >
+                          {icon}
+                          <span>{link.label}</span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Stats at very bottom, slightly more padding and smoother color change */}
                 {hasStats && (
-                  <div className="mt-2 flex flex-wrap justify-center gap-3 text-xs text-muted-foreground">
+                  <div className="mt-3 flex flex-wrap justify-center gap-3 text-[11px] text-muted-foreground transition-colors duration-500 ease-out group-hover:text-white/90">
                     {project.githubStars !== undefined && (
                       <span className="inline-flex items-center gap-1">
                         <Star className="h-3.5 w-3.5" />
@@ -89,66 +147,11 @@ export function ProjectsSection() {
                     )}
                   </div>
                 )}
-
-                {/* Middle content: description + tools */}
-                <div className="mt-3 flex-1 space-y-3">
-                  {/* Description paragraphs */}
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    {project.description && project.description.length > 0 ? (
-                      project.description.map((para: string, idx: number) => (
-                        <p key={idx}>{para}</p>
-                      ))
-                    ) : (
-                      <p>{project.summary}</p>
-                    )}
-                  </div>
-
-                  {/* Technologies */}
-                  {project.technologies && project.technologies.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.technologies.map((tech: string) => (
-                        <span
-                          key={tech}
-                          className="rounded-full border border-white/10 px-2 py-1 text-[12px] text-muted-foreground"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Separator above buttons */}
-                {project.links && project.links.length > 0 && (
-                  <div className="mt-3 h-px w-full bg-white/10" />
-                )}
-
-                {/* Buttons aligned left at bottom */}
-                {project.links && project.links.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-2 text-xs sm:text-sm">
-                    {project.links.map((link: ProjectLink) => {
-                      const icon = getLinkIcon(link.type);
-                      return (
-                        <a
-                          key={`${project.id}-${link.label}`}
-                          href={link.href}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-transparent px-3 py-1.5 text-[11px] text-muted-foreground transition-colors hover:border-accent hover:text-foreground sm:text-xs"
-                        >
-                          {icon}
-                          <span>{link.label}</span>
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
               </article>
             );
           })}
         </div>
 
-        {/* View more / Show less button */}
         {showToggle && (
           <div className="mt-6 flex justify-center">
             <button

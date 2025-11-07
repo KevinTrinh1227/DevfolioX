@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { siteConfig } from "../config/siteConfig";
 import { Menu, X } from "lucide-react";
 
@@ -30,22 +31,29 @@ export function Navbar() {
   };
 
   return (
-    <header className="z-20 border-b border-white/10 bg-background/80 backdrop-blur sm:sticky sm:top-0">
+    <header className="sticky top-0 z-20 border-b border-white/10 bg-background/80 backdrop-blur">
       <div className="mx-auto w-full max-w-5xl px-4">
         <div className="flex items-center justify-between py-4">
-          {/* Brand */}
-          <Link href="#top" className="flex items-baseline gap-2">
-            <span className="text-base font-semibold tracking-tight sm:text-lg">
-              kevintrinh.dev
-            </span>
-            {showSubtitle && (
-              <span className="hidden text-[11px] text-muted-foreground lg:inline lg:text-sm">
-                {siteConfig.title}
+          <Link href="#top" className="flex items-center gap-2">
+            <Image
+              src="/images/favicon.png"
+              alt="kevintrinh.dev logo"
+              width={24}
+              height={24}
+              className="rounded-sm"
+            />
+            <div className="flex items-center gap-2">
+              <span className="text-base font-semibold tracking-tight sm:text-lg">
+                kevintrinh.dev
               </span>
-            )}
+              {showSubtitle && (
+                <span className="hidden text-[11px] text-muted-foreground lg:inline lg:text-sm">
+                  {siteConfig.title}
+                </span>
+              )}
+            </div>
           </Link>
 
-          {/* Desktop nav */}
           <nav className="ml-4 hidden flex-1 justify-end gap-1.5 text-xs text-muted-foreground sm:flex md:gap-2 md:text-sm">
             {enabledNavItems.map((item) => (
               <a
@@ -58,7 +66,6 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Right side: My Resume shortcut (desktop / tablet only) */}
           <div className="ml-4 hidden items-center gap-2 text-xs sm:flex md:text-sm">
             {siteConfig.sections.resume && (
               <a
@@ -70,7 +77,6 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile menu toggle */}
           <button
             type="button"
             className="ml-2 inline-flex items-center justify-center rounded-md border border-white/15 p-1.5 text-muted-foreground hover:border-accent hover:text-foreground sm:hidden"
@@ -81,7 +87,6 @@ export function Navbar() {
           </button>
         </div>
 
-        {/* Mobile dropdown menu */}
         {isOpen && (
           <div className="pb-4 sm:hidden">
             <nav className="flex flex-col gap-1 text-sm text-muted-foreground">

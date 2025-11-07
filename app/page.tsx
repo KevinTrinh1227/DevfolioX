@@ -11,7 +11,7 @@ import { YouTubeSection } from "../components/sections/YouTube";
 import { CertificationsSection } from "../components/sections/Certifications";
 import { ContactSection } from "../components/sections/Contact";
 
-export default function Home() {
+export default function Page() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />

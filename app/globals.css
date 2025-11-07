@@ -17,3 +17,15 @@ body {
 .text-muted-foreground {
   color: var(--muted);
 }
+
+/* Force arrow cursor everywhere */
+* {
+  cursor: default;
+}
+
+/* Keep pointer/hand for interactive elements */
+a,
+button,
+[role="button"] {
+  cursor: pointer;
+}

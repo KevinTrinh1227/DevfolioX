@@ -28,7 +28,7 @@ export function HeroSection() {
             className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-medium text-white transition-transform transition-colors hover:-translate-y-[1px] hover:bg-accent/90"
           >
             <FileText className="h-4 w-4" />
-            <span>View Resume</span>
+            <span>My Resume</span>
           </a>
 
           <a
