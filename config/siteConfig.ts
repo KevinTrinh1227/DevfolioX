@@ -12,7 +12,7 @@ export const siteConfig = {
     devto: "https://dev.to/YOUR_DEVTO_HANDLE",
     medium: "https://medium.com/@YOUR_MEDIUM_HANDLE",
     youtube: "https://www.youtube.com/@CoderTrinh",
-    email: "you@example.com", // <-- no "mailto:" here
+    email: "you@example.com",
     handshake: "",
     telegram: "",
     discord: "https://discord.gg/YOUR_DISCORD_LINK",
@@ -38,7 +38,7 @@ export const siteConfig = {
     projects: true,
     blog: true,
     youtube: true,
-    certifications: true, // <-- add this
+    certifications: true,
     codingStats: true,
     contact: true,
     resume: true,
@@ -65,6 +65,11 @@ export const siteConfig = {
       "Google Cloud",
       "Linux Ubuntu",
       "Git",
+    ],
+    moreDetails: [
+      "I’m particularly interested in how systems, infrastructure, and machine learning intersect — from efficient data pipelines to intelligent features that feel seamless to users.",
+      "Recently, I’ve been focusing on building projects that solve real problems for students and early-career developers, including tools that surface insights from academic data.",
+      "Outside of tech, I enjoy optimizing my workspace, learning new openings and tactics in chess, and hunting for unique finds while thrifting.",
     ],
   },
 

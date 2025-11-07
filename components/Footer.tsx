@@ -1,6 +1,7 @@
 // components/Footer.tsx
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { siteConfig } from "../config/siteConfig";
 import {
   Heart,
@@ -74,7 +75,10 @@ export function Footer() {
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-4 py-8 text-sm text-muted-foreground sm:flex-row sm:items-start sm:justify-between sm:text-base">
         {/* Left: site + repo info */}
         <div className="space-y-3 text-center sm:text-left">
-          <div className="flex items-center justify-center gap-2 sm:justify-start">
+          <Link
+            href="/"
+            className="flex items-center justify-center gap-2 sm:justify-start"
+          >
             <Image
               src="/images/favicon.png"
               alt="kevintrinh.dev logo"
@@ -85,7 +89,7 @@ export function Footer() {
             <span className="text-lg font-semibold text-accent sm:text-xl">
               kevintrinh.dev
             </span>
-          </div>
+          </Link>
 
           <div className="space-y-2 text-sm sm:text-base">
             {repo.lastUpdated && (
@@ -95,7 +99,7 @@ export function Footer() {
                   href={repo.url ?? "#"}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-accent hover:text-accent/80"
+                  className="font-mono text-accent hover:text-accent/80 transition-colors"
                 >
                   9a8vbf6a
                 </a>
@@ -115,7 +119,7 @@ export function Footer() {
                     href={item.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-foreground transition hover:border-accent hover:bg-white/5 hover:text-accent"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-foreground transition hover:border-accent hover:bg:white/5 hover:text-accent"
                   >
                     {item.icon}
                   </a>
@@ -128,7 +132,6 @@ export function Footer() {
         {/* Right: actions + text */}
         <div className="flex flex-col items-center gap-3 text-center sm:items-end sm:text-right">
           <div className="flex flex-wrap justify-center gap-3 sm:justify-end">
-            {/* My Resume button */}
             <a
               href="#resume"
               className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-foreground transition hover:border-accent hover:bg-white/5 hover:text-foreground sm:text-sm"
@@ -137,7 +140,6 @@ export function Footer() {
               <span>My Resume</span>
             </a>
 
-            {/* Sponsor button (same style) */}
             {siteConfig.sponsor?.enabled && siteConfig.sponsor.url && (
               <a
                 href={siteConfig.sponsor.url}
@@ -152,7 +154,25 @@ export function Footer() {
           </div>
 
           <p className="mt-2 text-sm text-muted-foreground sm:text-base">
-            This portfolio site is using DevfolioX and powered by Vercel.
+            Portfolio built using{" "}
+            <a
+              href={repo.url ?? "#"}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-muted-foreground transition-colors hover:text-foreground"
+            >
+              DevfolioX
+            </a>
+            , powered by{" "}
+            <a
+              href="https://vercel.com"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Vercel
+            </a>
+            .
           </p>
 
           <p className="text-xs text-muted-foreground sm:text-sm">

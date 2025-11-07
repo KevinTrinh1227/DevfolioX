@@ -12,10 +12,7 @@ export function CertificationsSection() {
   const visibleCerts = showAll ? certifications : certifications.slice(0, 3);
 
   return (
-    <section
-      id="certifications"
-      className="py-16 scroll-mt-24 border-t border-white/5"
-    >
+    <section id="certifications" className="py-16 scroll-mt-24">
       <div className="mx-auto w-full max-w-5xl px-4">
         <div>
           <h2 className="text-lg font-semibold uppercase tracking-[0.2em] text-white/60">
