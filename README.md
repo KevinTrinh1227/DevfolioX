@@ -1,3 +1,33 @@
+<!-- devfoliox
+{
+  "title": "DevfolioX",
+  "summary": "A minimal, config-driven developer portfolio template built with Next.js and Tailwind CSS.",
+  "description": [
+    "DevfolioX is a one-page portfolio focused on simplicity, speed, and practical integrations for students and developers.",
+    "It centralizes projects, experience, writing, and contact into a single minimal layout while remaining easy to configure and deploy on free hosting."
+  ],
+  "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
+  "start": "Jan 2025",
+  "end": "Present",
+
+  "stats_stars": true,
+  "stats_forks": true,
+  "stats_downloads": false,
+
+  "links": [
+    {
+      "label": "Live Demo",
+      "href": "https://devfoliox.vercel.app",
+      "type": "live"
+    },
+    {
+      "label": "Source",
+      "href": "https://github.com/KevinTrinh1227/DevfolioX",
+      "type": "github"
+    }
+  ]
+}
+-->
 <div align="center">
 
 # ✨ DevfolioX
