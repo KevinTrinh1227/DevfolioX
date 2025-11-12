@@ -1,4 +1,4 @@
-<!-- devfoliox-project
+<!-- devfoliox
 {
   "title": "DevfolioX",
   "summary": "A minimal, config-driven developer portfolio template built with Next.js and Tailwind CSS.",
