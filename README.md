@@ -17,12 +17,12 @@
   "links": [
     {
       "label": "Live Demo",
-      "href": "https://your-devfoliox-demo-url.com",
+      "href": "https://devfoliox.vercel.app",
       "type": "live"
     },
     {
       "label": "Source",
-      "href": "https://github.com/yourname/devfoliox",
+      "href": "https://github.com/KevinTrinh1227/DevfolioX",
       "type": "github"
     }
   ]
