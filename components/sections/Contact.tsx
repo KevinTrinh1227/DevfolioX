@@ -23,12 +23,44 @@ export function ContactSection() {
   const youtube = socials.youtube;
   const devto = socials.devto;
 
-  const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "done" | "error"
+  >("idle");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (status === "submitting") return;
+
     setStatus("submitting");
-    setTimeout(() => setStatus("done"), 600);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      reason: formData.get("reason"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        console.error("Contact API error", await res.text());
+        setStatus("error");
+        return;
+      }
+
+      setStatus("done");
+      form.reset();
+    } catch (err) {
+      console.error("Contact submit failed", err);
+      setStatus("error");
+    }
   }
 
   return (

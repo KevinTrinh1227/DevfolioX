@@ -42,6 +42,12 @@ type RawGithubReadmeProject = {
 
 type RawLocalProject = ProjectItem & {
   priority?: number;
+  githubRepoUrl?: string;
+  stats?: {
+    stars?: boolean;
+    forks?: boolean;
+    downloads?: boolean;
+  };
 };
 
 type RawConfig = {
