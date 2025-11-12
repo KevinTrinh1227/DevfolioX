@@ -1,0 +1,127 @@
+{
+  "github_readme_projects": [
+    {
+      "repo_url": "https://github.com/KevinTrinh1227/DevfolioX",
+      "priority": 1
+    },
+    {
+      "repo_url": "https://github.com/KevinTrinh1227/Reactfolio",
+      "priority": 2
+    },
+    {
+      "repo_url": "https://github.com/KevinTrinh1227/Hycord-Client",
+      "priority": 3
+    },
+    {
+      "repo_url": "https://github.com/KevinTrinh1227/Github-Profile-Booster",
+      "priority": 4
+    },
+    {
+      "repo_url": "https://github.com/KevinTrinh1227/JSONSnap",
+      "priority": 5
+    }
+  ],
+  "local_projects": [
+    {
+      "id": "prize-picks-predictions",
+      "name": "Prize-Picks-Predictions",
+      "summary": "A Flask web app that uses machine learning models to generate PrizePicks-style prediction insights.",
+      "description": [
+        "Prize-Picks-Predictions ingests historical player and game data, runs it through trained machine learning models, and surfaces simple over/under style suggestions.",
+        "The app focuses on interpretability and clean UI so users can quickly see model outputs, confidence levels, and recent performance."
+      ],
+      "start": "Aug 2024",
+      "end": "Present",
+      "technologies": ["Python", "Flask", "Pandas", "scikit-learn"],
+      "priority": 6,
+      "links": [
+        {
+          "label": "Source",
+          "href": "https://github.com/KevinTrinh1227/Prize-Picks-Predictions",
+          "type": "github"
+        }
+      ],
+      "githubRepoUrl": "https://github.com/KevinTrinh1227/Prize-Pick-Predictions",
+      "stats": {
+        "stars": true,
+        "forks": true,
+        "downloads": true
+      }
+    },
+    {
+      "id": "leetcode-tracker",
+      "name": "LeetCode Tracker",
+      "summary": "A simple dashboard to keep track of LeetCode progress over time.",
+      "description": [
+        "LeetCode Tracker helps visualize solved problems by difficulty, topic, and week.",
+        "The goal is to give a calm overview of progress rather than a noisy dashboard."
+      ],
+      "start": "Feb 2024",
+      "end": "Present",
+      "technologies": ["React", "TypeScript", "Chart.js"],
+      "priority": 7,
+      "links": [
+        {
+          "label": "Live Demo",
+          "href": "https://your-leetcode-tracker-url.com",
+          "type": "live"
+        },
+        {
+          "label": "Source",
+          "href": "https://github.com/yourname/leetcode-tracker",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "id": "study-planner",
+      "name": "Study Planner",
+      "summary": "A minimal study planning web app for courses, tasks, and deadlines.",
+      "description": [
+        "Study Planner lets you organize courses, assignments, and exams in a clean, distraction-free interface.",
+        "It focuses on a small set of features done well instead of trying to replace a full project management tool."
+      ],
+      "start": "Jan 2023",
+      "end": "Nov 2023",
+      "technologies": ["Next.js", "Tailwind CSS"],
+      "priority": 8,
+      "links": [
+        {
+          "label": "Live Demo",
+          "href": "https://your-study-planner-url.com",
+          "type": "live"
+        },
+        {
+          "label": "Source",
+          "href": "https://github.com/yourname/study-planner",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "id": "notes-api",
+      "name": "Notes API",
+      "summary": "A lightweight REST API for notes with authentication and tagging.",
+      "description": [
+        "Notes API is a small backend service designed for learning authentication, CRUD patterns, and clean API design.",
+        "It is intentionally small but structured like a real production service, making it a good teaching/project base."
+      ],
+      "start": "Aug 2022",
+      "end": "Mar 2023",
+      "technologies": ["Node.js", "Express", "PostgreSQL"],
+      "priority": 9,
+      "links": [
+        {
+          "label": "Source",
+          "href": "https://github.com/yourname/notes-api",
+          "type": "github"
+        },
+        {
+          "label": "Docs",
+          "href": "https://github.com/yourname/notes-api#readme",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}
