@@ -69,7 +69,9 @@ export function Navbar() {
           <div className="ml-4 hidden items-center gap-2 text-xs sm:flex md:text-sm">
             {siteConfig.sections.resume && (
               <a
-                href="#resume"
+                href="/resume"
+                target="_blank"
+                rel="noreferrer"
                 className="rounded-full border border-white/20 px-3.5 py-1.5 text-xs font-medium text-muted-foreground underline-offset-2 transition hover:border-accent hover:bg-white/5 hover:text-foreground md:text-sm"
               >
                 My Resume
@@ -103,7 +105,9 @@ export function Navbar() {
 
               {siteConfig.sections.resume && (
                 <a
-                  href="#resume"
+                  href="/resume"
+                  target="_blank"
+                  rel="noreferrer"
                   onClick={handleNavClick}
                   className="rounded-full px-3 py-2 font-medium text-muted-foreground transition hover:bg-white/5 hover:text-foreground"
                 >

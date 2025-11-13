@@ -1,8 +1,18 @@
 // components/sections/Hero.tsx
+"use client";
+
 import { siteConfig } from "../../config/siteConfig";
 import { FileText, Mail } from "lucide-react";
+import { useModalRoute } from "@/components/hooks/useModalRoute";
 
 export function HeroSection() {
+  // Short flag-style link: "/?resume"
+  const resumeModal = useModalRoute({
+    scheme: "flag",
+    key: "resume",
+    scroll: false,
+  });
+
   return (
     <section id="top" className="pt-16 pb-20">
       <div className="mx-auto w-full max-w-5xl px-4">
@@ -23,9 +33,15 @@ export function HeroSection() {
         </p>
 
         <div className="mt-7 flex flex-wrap gap-3">
+          {/* Open the resume modal with a shareable SPA URL (/?resume) */}
           <a
-            href="#resume"
+            href={resumeModal.href}
+            onClick={(e) => {
+              e.preventDefault();
+              resumeModal.open();
+            }}
             className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-medium text-white transition-transform transition-colors hover:-translate-y-[1px] hover:bg-accent/90"
+            title={`Open ${resumeModal.href}`}
           >
             <FileText className="h-4 w-4" />
             <span>My Resume</span>

@@ -1,0 +1,24 @@
+{
+  "name": "Kevin Trinh",
+  "socials": {
+    "email": "kevintrinh1227@gmail.com",
+    "github": "https://github.com/kevintrinh1227",
+    "linkedin": "https://www.linkedin.com/in/YOUR_LINKEDIN_SLUG",
+    "devto": "https://dev.to/YOUR_DEVTO_HANDLE",
+    "youtube": "https://www.youtube.com/@CoderTrinh",
+    "discord": "https://discord.gg/YOUR_DISCORD_LINK"
+  },
+  "sections": {
+    "contact": true
+  },
+  "resume": {
+    "source": "google",
+    "googleDocId": "",
+    "file": {
+      "path": "Kevin_Trinh_Resume.pdf",
+      "url": ""
+    },
+    "filename": "Kevin_Trinh_Resume.pdf",
+    "cacheSeconds": 3600
+  }
+}

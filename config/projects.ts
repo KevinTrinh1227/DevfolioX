@@ -1,5 +1,5 @@
 // config/projects.ts
-import rawConfig from "./devfoliox.projects.json";
+import rawConfig from "./projects.json";
 
 export type ProjectLinkType =
   | "github"

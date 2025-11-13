@@ -1,20 +1,90 @@
 // components/sections/Experience.tsx
 "use client";
 
-import { useState } from "react";
-import { FileText } from "lucide-react";
+import { useEffect, useState } from "react";
+import { FileText, Download, ExternalLink } from "lucide-react";
 import { experience } from "../../config/experience";
+import { Modal } from "@/components/ui/Modal";
+import PdfEmbed from "@/components/ui/PdfEmbed";
+import { useModalRoute } from "@/components/hooks/useModalRoute";
 
 export function ExperienceSection() {
   if (!experience.length) return null;
 
   const defaultActiveId = experience[0]?.id;
   const [activeId, setActiveId] = useState<string>(defaultActiveId);
-
   const activeItem =
     experience.find((item) => item.id === activeId) ?? experience[0];
 
-  const resumeHref = "/resume.pdf";
+  // Short flag-style URL: /current-path?resume
+  const resumeModal = useModalRoute({
+    scheme: "flag",
+    key: "resume",
+    scroll: false,
+  });
+  const [resumeOpen, setResumeOpen] = useState(false);
+
+  // Show "(Updated ...)" when the API exposes a last-modified-like header
+  const [lastUpdatedText, setLastUpdatedText] = useState<string | null>(null);
+
+  // Sync modal with URL flag
+  useEffect(() => {
+    setResumeOpen(resumeModal.isActive);
+  }, [resumeModal.isActive]);
+
+  // API route paths
+  const resumeViewHref = "/resume"; // inline view via API
+  const resumeDownloadHref = "/resume?dl=1";
+
+  // Fetch metadata for "Updated ..." text (works for Google Docs and any source that returns headers)
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchMeta() {
+      try {
+        const res = await fetch(resumeViewHref, {
+          method: "HEAD",
+          cache: "no-store",
+        });
+        if (!res.ok) return;
+
+        const lm =
+          res.headers.get("Last-Modified") ||
+          res.headers.get("x-resume-updated");
+        if (!lm) return;
+
+        const d = new Date(lm);
+        if (isNaN(d.getTime())) return;
+
+        const formatted = d.toLocaleString(undefined, {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        if (!cancelled) setLastUpdatedText(formatted);
+      } catch {
+        // ignore
+      }
+    }
+
+    // Fetch once on mount and whenever the modal re-opens (helps when the PDF updates)
+    fetchMeta();
+    return () => {
+      cancelled = true;
+    };
+  }, [resumeViewHref, resumeOpen]);
+
+  const btnBase =
+    "inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-xs sm:text-sm font-medium transition border border-white/15 text-white/90 hover:text-white hover:border-accent hover:bg-white/5";
+  const btnAccent =
+    "inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-xs sm:text-sm font-medium transition bg-accent text-white hover:bg-accent/90";
+
+  const modalTitle = lastUpdatedText
+    ? `My Resume (Updated ${lastUpdatedText})`
+    : "My Resume";
 
   return (
     <section id="experience" className="py-16 scroll-mt-12">
@@ -29,15 +99,24 @@ export function ExperienceSection() {
           </h3>
 
           <div className="flex flex-wrap gap-3 text-xs sm:text-sm">
+            {/* Shareable link + SPA modal open (no full page reload) => "/?resume" */}
             <a
-              href={resumeHref}
-              download
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-xs font-medium text-white transition-transform transition-colors hover:-translate-y-[1px] hover:bg-accent/90 sm:text-sm"
+              href={resumeModal.href}
+              onClick={(e) => {
+                e.preventDefault();
+                resumeModal.open();
+              }}
+              className={btnAccent}
+              title={`Open ${resumeModal.href}`}
             >
               <FileText className="h-4 w-4" />
               <span>My Resume</span>
+            </a>
+
+            {/* Direct download */}
+            <a href={resumeDownloadHref} className={btnBase}>
+              <Download className="h-4 w-4" />
+              <span>Download PDF</span>
             </a>
           </div>
         </div>
@@ -86,7 +165,7 @@ export function ExperienceSection() {
             </ul>
           </div>
 
-          {/* Right: details (no hover motion) */}
+          {/* Right: details */}
           <article className="flex-1 border-t border-white/10 pt-4 text-sm text-muted-foreground md:border-t-0 md:border-l md:border-white/10 md:pl-4 md:pt-0">
             <div className="flex flex-col justify-between gap-2 sm:flex-row">
               <div>
@@ -118,6 +197,26 @@ export function ExperienceSection() {
           </article>
         </div>
       </div>
+
+      {/* Resume Modal */}
+      <Modal open={resumeOpen} onClose={resumeModal.close} title={modalTitle}>
+        <PdfEmbed src={resumeViewHref} />
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+          <a
+            href={resumeViewHref}
+            target="_blank"
+            rel="noreferrer"
+            className={btnBase}
+          >
+            <ExternalLink className="h-4 w-4" />
+            <span>Open in New Tab</span>
+          </a>
+          <a href={resumeDownloadHref} className={btnAccent}>
+            <Download className="h-4 w-4" />
+            <span>Download PDF</span>
+          </a>
+        </div>
+      </Modal>
     </section>
   );
 }

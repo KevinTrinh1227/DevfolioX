@@ -1,4 +1,6 @@
 // app/page.tsx
+import { Suspense } from "react";
+
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { HeroSection } from "../components/sections/Hero";
@@ -15,15 +17,28 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <HeroSection />
-      <AboutSection />
+
+      {/* Components that (directly or via hooks) use useSearchParams must be wrapped in Suspense */}
+      <Suspense fallback={null}>
+        <HeroSection />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <AboutSection />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <ExperienceSection />
+      </Suspense>
+
+      {/* Other sections can render normally */}
       <EducationSection />
-      <ExperienceSection />
       <ProjectsSection />
       <BlogSection />
       <YouTubeSection />
       <CertificationsSection />
       <ContactSection />
+
       <Footer />
     </main>
   );

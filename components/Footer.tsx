@@ -133,7 +133,7 @@ export function Footer() {
         <div className="flex flex-col items-center gap-3 text-center sm:items-end sm:text-right">
           <div className="flex flex-wrap justify-center gap-3 sm:justify-end">
             <a
-              href="#resume"
+              href="/resume"
               className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 text-xs font-medium text-foreground transition hover:border-accent hover:bg-white/5 hover:text-foreground sm:text-sm"
             >
               <FileDown className="h-4 w-4" />
