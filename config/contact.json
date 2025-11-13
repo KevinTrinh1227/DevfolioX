@@ -36,13 +36,13 @@
       {
         "icon": "Mail",
         "label": "Email",
-        "href": "mailto:you@example.com",
-        "detail": "you@example.com"
+        "href": "mailto:kevintrinh1227@gmail.com",
+        "detail": "kevintrinh1227@gmail.com"
       },
       {
         "icon": "MessageCircle",
         "label": "Discord",
-        "href": "https://discord.gg/YOUR_DISCORD_LINK",
+        "href": "https://discord.gg/YOUR_REAL_INVITE",
         "detail": "Copy my Discord tag"
       },
       {
@@ -54,13 +54,13 @@
       {
         "icon": "Linkedin",
         "label": "LinkedIn",
-        "href": "https://www.linkedin.com/in/YOUR_LINKEDIN_SLUG",
+        "href": "https://www.linkedin.com/in/YOUR_REAL_SLUG",
         "detail": "My professional profile"
       },
       {
         "icon": "FileText",
         "label": "Dev.to",
-        "href": "https://dev.to/YOUR_DEVTO_HANDLE",
+        "href": "https://dev.to/YOUR_REAL_HANDLE",
         "detail": "Articles & posts"
       },
       {
@@ -93,8 +93,9 @@
     "nameMax": 50,
     "emailMax": 50,
     "subjectMax": 50,
-    "messageMax": 2000,
+    "messageMax": 1000,
     "discordMax": 2000,
-    "telegramMax": 4096
+    "telegramMax": 4096,
+    "emailContentMax": 100000
   }
 }
