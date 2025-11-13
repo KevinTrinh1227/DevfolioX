@@ -1,4 +1,6 @@
 // config/blog.ts
+import raw from "./blog.json";
+
 export type BlogPlatform = "devto" | "medium";
 
 export type BlogPost = {
@@ -13,29 +15,15 @@ export type BlogPost = {
   featured?: boolean;
 };
 
-export const blogPosts: BlogPost[] = [
-  {
-    id: "reactfolio-deep-dive",
-    title: "Building and Deploying a React Portfolio from Scratch",
-    summary:
-      "A walkthrough of how I planned, built, and deployed my React portfolio, including routing, styling, and deployment tips.",
-    url: "https://dev.to/your-handle/reactfolio-deep-dive",
-    platform: "devto",
-    date: "Jan 2025",
-    readTime: "10 min read",
-    tags: ["React", "Portfolio", "Frontend"],
-    featured: true,
-  },
-  {
-    id: "flask-ml-predictions",
-    title: "Serving Machine Learning Models with Flask",
-    summary:
-      "How I wired up a small ML model behind a Flask API, with basic validation, logging, and deployment notes.",
-    url: "https://medium.com/@your-handle/flask-ml-predictions",
-    platform: "medium",
-    date: "Dec 2024",
-    readTime: "8 min read",
-    tags: ["Python", "Flask", "Machine Learning"],
-  },
-  // add more...
-];
+// Optional: light runtime guard to keep platform values honest
+function normalize(items: any[]): BlogPost[] {
+  return (items || []).filter(Boolean).map((it) => {
+    const platform =
+      it.platform === "devto" || it.platform === "medium"
+        ? it.platform
+        : "devto"; // default/fallback
+    return { ...it, platform } as BlogPost;
+  });
+}
+
+export const blogPosts: BlogPost[] = normalize(raw as any[]);

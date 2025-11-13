@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { siteConfig } from "../../config/siteConfig";
 import {
   Github,
@@ -12,25 +12,157 @@ import {
   Youtube,
   GraduationCap,
   ExternalLink,
-  Globe,
   Mail,
+  MessageCircle,
+  Send,
+  CheckCircle2,
 } from "lucide-react";
 import { Modal } from "../ui/Modal";
-import { Tooltip } from "../ui/Tooltip";
 import { useModalRoute } from "@/components/hooks/useModalRoute";
 
+/** Map label/icon keys from JSON -> lucide icons */
 const SOCIAL_ICON_MAP: Record<string, ReactNode> = {
   GitHub: <Github className="h-4 w-4" />,
+  Github: <Github className="h-4 w-4" />,
   LinkedIn: <Linkedin className="h-4 w-4" />,
+  Linkedin: <Linkedin className="h-4 w-4" />,
   "Dev.to": <Code2 className="h-4 w-4" />,
+  Devto: <Code2 className="h-4 w-4" />,
   Medium: <PenSquare className="h-4 w-4" />,
   YouTube: <Youtube className="h-4 w-4" />,
   Handshake: <GraduationCap className="h-4 w-4" />,
-  Telegram: <GraduationCap className="h-4 w-4" />, // placeholder icon
-  Discord: <GraduationCap className="h-4 w-4" />, // placeholder icon
+  Telegram: <Send className="h-4 w-4" />,
+  Discord: <MessageCircle className="h-4 w-4" />,
+  Mail: <Mail className="h-4 w-4" />,
 };
 
+type SocialItem = {
+  key?: string;
+  label: string;
+  href?: string; // can be "copy:VALUE" to trigger clipboard
+  icon?: string;
+  detail?: string;
+  showIn?: { footer?: boolean; about?: boolean; contact?: boolean };
+};
+
+/** Build the socials that should show in the About section */
+function getAboutSocials(): SocialItem[] {
+  // Preferred: socialsList[] with showIn.about === true
+  const list = (siteConfig as any).socialsList as SocialItem[] | undefined;
+
+  if (Array.isArray(list) && list.length) {
+    return list
+      .filter((s) => s?.href && s?.showIn?.about)
+      .map((s) => ({
+        key: s.key,
+        label: s.label,
+        href: s.href,
+        icon: s.icon,
+        detail: s.detail,
+        showIn: s.showIn,
+      }));
+  }
+
+  // Fallback: legacy socials object
+  const legacy = siteConfig.socials ?? {};
+  const fallback: SocialItem[] = [
+    legacy.github && { label: "GitHub", href: legacy.github, icon: "Github" },
+    legacy.linkedin && {
+      label: "LinkedIn",
+      href: legacy.linkedin,
+      icon: "Linkedin",
+    },
+    legacy.devto && { label: "Dev.to", href: legacy.devto, icon: "Code2" },
+    legacy.medium && {
+      label: "Medium",
+      href: legacy.medium,
+      icon: "PenSquare",
+    },
+    legacy.youtube && {
+      label: "YouTube",
+      href: legacy.youtube,
+      icon: "Youtube",
+    },
+    legacy.handshake && {
+      label: "Handshake",
+      href: legacy.handshake,
+      icon: "GraduationCap",
+    },
+    legacy.telegram && {
+      label: "Telegram",
+      href: legacy.telegram,
+      icon: "Send",
+    },
+    legacy.discord && {
+      label: "Discord",
+      href: legacy.discord,
+      icon: "MessageCircle",
+    },
+    legacy.email && {
+      label: "Email",
+      href: legacy.email.startsWith("mailto:")
+        ? legacy.email
+        : `mailto:${legacy.email}`,
+      icon: "Mail",
+    },
+  ].filter(Boolean) as SocialItem[];
+
+  return fallback;
+}
+
+function SocialButton({
+  item,
+  onCopied,
+}: {
+  item: SocialItem;
+  onCopied?: () => void;
+}) {
+  const icon = (item.icon && SOCIAL_ICON_MAP[item.icon]) ||
+    SOCIAL_ICON_MAP[item.label] || <ExternalLink className="h-4 w-4" />;
+
+  const isCopy = typeof item.href === "string" && item.href.startsWith("copy:");
+  const copyValue = isCopy ? item.href!.slice(5) : "";
+
+  if (isCopy) {
+    return (
+      <button
+        type="button"
+        onClick={async () => {
+          try {
+            await navigator.clipboard.writeText(copyValue);
+            onCopied?.();
+          } catch {
+            // best-effort fallback
+            onCopied?.();
+          }
+        }}
+        className="inline-flex items-center gap-1.5 rounded-md border border-white/20 bg-transparent px-3 py-1.5 text-xs text-foreground transition hover:border-accent hover:bg-white/5"
+        title={`Copy ${item.label}`}
+      >
+        {icon}
+        <span>{item.label}</span>
+      </button>
+    );
+  }
+
+  return (
+    <a
+      href={item.href}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex items-center gap-1.5 rounded-md border border-white/20 bg-transparent px-3 py-1.5 text-xs text-foreground transition hover:border-accent hover:bg-white/5"
+    >
+      {icon}
+      <span>{item.label}</span>
+    </a>
+  );
+}
+
 export function AboutSection() {
+  // Render only if enabled in JSON
+  const enabled = (siteConfig as any)?.sections?.about === true;
+  if (!enabled) return null;
+
   // URL-synced modals with short flag params: /?about and /?avatar
   const aboutModal = useModalRoute({
     scheme: "flag",
@@ -46,33 +178,14 @@ export function AboutSection() {
 
   const about = siteConfig.about;
   const tools = about?.recentTools ?? [];
-  const socials = siteConfig.socials ?? {};
 
-  const socialLinks: { label: string; href?: string }[] = [
-    { label: "GitHub", href: socials.github },
-    { label: "LinkedIn", href: socials.linkedin },
-    { label: "Dev.to", href: socials.devto },
-    { label: "Medium", href: socials.medium },
-    { label: "YouTube", href: socials.youtube },
-    { label: "Handshake", href: socials.handshake },
-    { label: "Telegram", href: socials.telegram },
-    { label: "Discord", href: socials.discord },
-  ].filter((s) => !!s.href);
+  const socialsAbout = getAboutSocials();
 
-  const stats = {
-    leetTotal: 0,
-    leetYear: 0,
-    leetMonth: 0,
-    commitsYear: 0,
-    commitsMonth: 0,
-    lastCommit: "N/A",
-    openSourcePRs: 0,
-    githubRepos: 0,
-    githubStars: siteConfig.repo?.stars ?? 0,
-    githubForks: siteConfig.repo?.forks ?? 0,
-    githubDownloads: siteConfig.repo?.downloads ?? 0,
-    githubFollowers: 0,
-  };
+  const [copiedBlink, setCopiedBlink] = useState(false);
+  function triggerCopiedBlink() {
+    setCopiedBlink(true);
+    setTimeout(() => setCopiedBlink(false), 1200);
+  }
 
   const helloLine = "Hello there, my name is ";
   const studentLine = (
@@ -99,7 +212,7 @@ export function AboutSection() {
             </h3>
 
             <div className="mt-5 space-y-3 text-sm text-muted-foreground sm:text-base">
-              {about?.intro?.map((paragraph, idx) => (
+              {about?.intro?.map((paragraph: string, idx: number) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
@@ -123,7 +236,7 @@ export function AboutSection() {
                   Recently Used Technologies
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-2">
-                  {tools.map((tool) => (
+                  {tools.map((tool: string) => (
                     <span
                       key={tool}
                       className="rounded-full border border-white/10 px-2 py-1 text-xs text-muted-foreground transition-transform transition-colors duration-200 hover:-translate-y-[1px] hover:border-accent/60 hover:bg-white/5"
@@ -135,30 +248,28 @@ export function AboutSection() {
               </div>
             )}
 
-            {socialLinks.length > 0 && (
+            {socialsAbout.length > 0 && (
               <div className="mt-6 text-xs sm:text-sm">
-                <p className="mb-2 text-xs font-semibold text-muted-foreground sm:text-sm">
-                  Social Quick Links
-                </p>
+                <div className="mb-2 flex items-center gap-2">
+                  <p className="text-xs font-semibold text-muted-foreground sm:text-sm">
+                    Social Quick Links
+                  </p>
+                  {/* ephemeral copied badge */}
+                  {copiedBlink && (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-green-500/30 bg-green-500/10 px-2 py-[2px] text-[11px] text-green-300">
+                      <CheckCircle2 className="h-3 w-3" />
+                      Copied!
+                    </span>
+                  )}
+                </div>
                 <div className="flex flex-wrap gap-2">
-                  {socialLinks.map((social) => {
-                    const icon = SOCIAL_ICON_MAP[social.label] ?? (
-                      <ExternalLink className="h-4 w-4" />
-                    );
-
-                    return (
-                      <a
-                        key={social.label}
-                        href={social.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-md border border-white/20 bg-transparent px-3 py-1.5 text-xs text-foreground transition hover:border-accent hover:bg-white/5"
-                      >
-                        {icon}
-                        <span>{social.label}</span>
-                      </a>
-                    );
-                  })}
+                  {socialsAbout.map((item) => (
+                    <SocialButton
+                      key={`${item.key || item.label}-${item.href}`}
+                      item={item}
+                      onCopied={triggerCopiedBlink}
+                    />
+                  ))}
                 </div>
               </div>
             )}
@@ -199,10 +310,16 @@ export function AboutSection() {
           <div className="grid gap-5 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)] md:items-start">
             <div className="space-y-4">
               <p className="text-base font-semibold text-foreground sm:text-lg">
-                {helloLine}
+                Hello there, my name is{" "}
                 <span className="font-semibold">Kevin Trinh</span>.
               </p>
-              <p className="text-sm sm:text-base">{studentLine}</p>
+              <p className="text-sm sm:text-base">
+                I&apos;m currently a student at{" "}
+                <span className="font-semibold">University of Houston</span>{" "}
+                with an interest in machine learning, operating systems,
+                full-stack development, and building tools that actually help
+                people.
+              </p>
 
               <div className="space-y-3">
                 {about?.moreDetails && Array.isArray(about.moreDetails)
@@ -238,7 +355,7 @@ export function AboutSection() {
                 Tools I&apos;ve Recently Used
               </p>
               <div className="flex flex-wrap gap-2">
-                {tools.map((tool) => (
+                {tools.map((tool: string) => (
                   <span
                     key={tool}
                     className="rounded-full border border-white/15 px-2.5 py-1 text-xs text-muted-foreground transition-transform transition-colors duration-200 hover:-translate-y-[1px] hover:border-accent/70 hover:bg-white/10 hover:text-foreground"
@@ -267,56 +384,28 @@ export function AboutSection() {
             </p>
           </div>
 
-          {/* 4) Featured projects */}
-          {/* … (unchanged) … */}
-
-          {/* 5) Dev stats */}
-          {/* … (unchanged) … */}
-
-          {/* 6) Socials & useful links */}
-          {(socialLinks.length > 0 || socials.email) && (
+          {/* 4) Socials & useful links in the modal */}
+          {socialsAbout.length > 0 && (
             <div>
-              <p className="mb-2 text-sm font-semibold text-foreground sm:text-base">
-                Socials &amp; Useful Links
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {socialLinks.map((social) => {
-                  const icon = SOCIAL_ICON_MAP[social.label] ?? (
-                    <ExternalLink className="h-4 w-4" />
-                  );
-
-                  return (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-transparent px-3.5 py-2 text-sm text-foreground transition hover:border-accent hover:bg-white/5"
-                    >
-                      {icon}
-                      <span>{social.label}</span>
-                    </a>
-                  );
-                })}
-
-                {socials.email && (
-                  <a
-                    href={`mailto:${socials.email}`}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-transparent px-3.5 py-2 text-sm text-foreground transition hover:border-accent hover:bg-white/5"
-                  >
-                    <Mail className="h-4 w-4" />
-                    <span>Email</span>
-                  </a>
+              <div className="mb-2 flex items-center gap-2">
+                <p className="text-sm font-semibold text-foreground sm:text-base">
+                  Socials &amp; Useful Links
+                </p>
+                {copiedBlink && (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-green-500/30 bg-green-500/10 px-2 py-[2px] text-[11px] text-green-300">
+                    <CheckCircle2 className="h-3 w-3" />
+                    Copied!
+                  </span>
                 )}
-
-                {/* Pretty link to Resume modal (handled elsewhere) */}
-                <a
-                  href="/resume"
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-transparent px-3.5 py-2 text-sm text-foreground transition hover:border-accent hover:bg-white/5"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  <span>Resume</span>
-                </a>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {socialsAbout.map((item) => (
+                  <SocialButton
+                    key={`modal-${item.key || item.label}-${item.href}`}
+                    item={item}
+                    onCopied={triggerCopiedBlink}
+                  />
+                ))}
               </div>
             </div>
           )}

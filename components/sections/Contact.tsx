@@ -15,15 +15,10 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-const NAME_MAX =
-  contactCfg?.limits?.nameMax ?? siteConfig?.contact?.nameMaxLength ?? 80;
-const EMAIL_MAX =
-  contactCfg?.limits?.emailMax ?? siteConfig?.contact?.emailMaxLength ?? 254;
+const NAME_MAX = contactCfg?.limits?.nameMax ?? 80;
+const EMAIL_MAX = contactCfg?.limits?.emailMax ?? 254;
+const MSG_MAX = contactCfg?.limits?.messageMax ?? 2000;
 const SUBJECT_MAX = contactCfg?.limits?.subjectMax ?? 50;
-const MSG_MAX =
-  contactCfg?.limits?.messageMax ??
-  siteConfig?.contact?.messageMaxLength ??
-  2000;
 
 const ui = contactCfg?.ui ?? {};
 const labels = ui.labels ?? {};
@@ -37,7 +32,7 @@ const subjectOptions = ui.subjectOptions ?? [
 ];
 const customSubjectLabel = ui.customSubjectOptionLabel ?? "Custom…";
 
-const socialsBlock = contactCfg?.socialsBlock ?? null;
+const socialsBlockCfg = contactCfg?.socialsBlock ?? null;
 
 type SocialLink = {
   icon?: string;
@@ -47,59 +42,75 @@ type SocialLink = {
 };
 
 export function ContactSection() {
-  const socials = siteConfig.socials ?? {};
-  const fallbackLinks = [
-    socials.email
-      ? {
+  // Only render if the section is enabled
+  if (siteConfig.sections && siteConfig.sections.contact === false) {
+    return null;
+  }
+
+  // Build “contact socials” from site.json -> siteConfig.socialsFor.contact
+  const contactSocials =
+    (siteConfig as any).socialsFor?.contact?.filter((s: any) => !!s?.href) ??
+    [];
+
+  // Resolve to the shape the grid expects; also normalize email mailto
+  const contactLinks: SocialLink[] = contactSocials.map((s: any) => ({
+    icon: s.icon,
+    label: s.label || s.key,
+    href:
+      s.key === "email"
+        ? s.href?.startsWith("mailto:")
+          ? s.href
+          : `mailto:${s.href}`
+        : s.href,
+    detail: s.detail,
+  }));
+
+  // Fallback links only if you *also* want contact.json extras or when no config present
+  const hasConfiguredLinks = contactLinks.length > 0;
+  const fallbackLinks: SocialLink[] = hasConfiguredLinks
+    ? []
+    : ([
+        siteConfig.socials?.email && {
           icon: "Mail",
           label: "Email",
-          href: `mailto:${socials.email}`,
-          detail: socials.email,
-        }
-      : null,
-    socials.discord
-      ? {
+          href: siteConfig.socials.email.startsWith("mailto:")
+            ? siteConfig.socials.email
+            : `mailto:${siteConfig.socials.email}`,
+          detail: siteConfig.socials.email.replace(/^mailto:/, ""),
+        },
+        siteConfig.socials?.discord && {
           icon: "MessageCircle",
           label: "Discord",
-          href: socials.discord,
-          detail: "Copy my Discord tag",
-        }
-      : null,
-    socials.github
-      ? {
+          href: siteConfig.socials.discord,
+          detail: "Join / contact on Discord",
+        },
+        siteConfig.socials?.github && {
           icon: "Github",
           label: "GitHub",
-          href: socials.github,
+          href: siteConfig.socials.github,
           detail: "Profile & projects",
-        }
-      : null,
-    socials.linkedin
-      ? {
+        },
+        siteConfig.socials?.linkedin && {
           icon: "Linkedin",
           label: "LinkedIn",
-          href: socials.linkedin,
-          detail: "My professional profile",
-        }
-      : null,
-    socials.devto
-      ? {
+          href: siteConfig.socials.linkedin,
+          detail: "Professional profile",
+        },
+        siteConfig.socials?.devto && {
           icon: "FileText",
           label: "Dev.to",
-          href: socials.devto,
+          href: siteConfig.socials.devto,
           detail: "Articles & posts",
-        }
-      : null,
-    socials.youtube
-      ? {
+        },
+        siteConfig.socials?.youtube && {
           icon: "Youtube",
           label: "YouTube",
-          href: socials.youtube,
+          href: siteConfig.socials.youtube,
           detail: "View my channel",
-        }
-      : null,
-  ].filter(Boolean) as SocialLink[];
+        },
+      ].filter(Boolean) as SocialLink[]);
 
-  const primaryEmail = socials.email;
+  const primaryEmail = siteConfig.socials?.email?.replace(/^mailto:/, "");
 
   const [status, setStatus] = useState<
     "idle" | "submitting" | "done" | "error"
@@ -109,13 +120,15 @@ export function ContactSection() {
   const [nameVal, setNameVal] = useState("");
   const [emailVal, setEmailVal] = useState("");
   const [messageVal, setMessageVal] = useState("");
-  const [sendCopy, setSendCopy] = useState(false);
 
   // subject select + optional custom input
   const [subjectVal, setSubjectVal] = useState<string>(
     subjectOptions[0] ?? "General message"
   );
   const [subjectCustom, setSubjectCustom] = useState<string>("");
+
+  // simple “copied” flash state for copy: links
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const startedAtRef = useRef<number>(0);
   useEffect(() => {
@@ -157,7 +170,6 @@ export function ContactSection() {
       message,
       hp,
       startedAt: startedAtRef.current,
-      sendCopy,
     };
 
     try {
@@ -187,7 +199,6 @@ export function ContactSection() {
       setNameVal("");
       setEmailVal("");
       setMessageVal("");
-      setSendCopy(false);
       setSubjectVal(subjectOptions[0] ?? "General message");
       setSubjectCustom("");
       setTimeout(() => setStatus("idle"), 4000);
@@ -202,6 +213,18 @@ export function ContactSection() {
   const intro =
     ui.intro ??
     "Feel free to reach out to me about job opportunities, collaborations, questions, or anything related to my work. You can contact me using my email or by filling out the form below to reach me quicker.";
+
+  // Copy handler for "copy:" socials
+  async function handleCopy(href: string, key: string) {
+    const value = href.replace(/^copy:/, "");
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 1500);
+    } catch {
+      // Silent failure; optionally set an error toast.
+    }
+  }
 
   return (
     <section id="contact" className="py-16 scroll-mt-12">
@@ -221,10 +244,8 @@ export function ContactSection() {
             <div className="flex items-center gap-2 rounded-md border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm text-green-300">
               <span>✅</span>
               <span>
-                {ui.successText ??
-                  siteConfig?.contact?.successText ??
-                  "Message sent! I'll get back to you soon."}{" "}
-                — {siteConfig.name}
+                {ui.successText ?? "Message sent! I'll get back to you soon."} —{" "}
+                {siteConfig.name}
               </span>
             </div>
           )}
@@ -372,24 +393,6 @@ export function ContactSection() {
             {/* Actions */}
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
-                <input
-                  id="sendCopy"
-                  name="sendCopy"
-                  type="checkbox"
-                  checked={sendCopy}
-                  onChange={(e) => setSendCopy(e.target.checked)}
-                  className="h-4 w-4 rounded border-white/20 bg-transparent"
-                />
-                <label
-                  htmlFor="sendCopy"
-                  className="text-xs text-muted-foreground"
-                >
-                  {ui.sendCopyLabel ?? "Send me a copy"}
-                  {emailVal ? ` (${emailVal})` : ""}
-                </label>
-              </div>
-
-              <div className="flex items-center gap-3">
                 {primaryEmail && (
                   <a
                     href={`mailto:${primaryEmail}`}
@@ -399,6 +402,9 @@ export function ContactSection() {
                     <span>Email me directly</span>
                   </a>
                 )}
+              </div>
+
+              <div className="flex items-center gap-3">
                 <button
                   type="submit"
                   disabled={status === "submitting"}
@@ -420,26 +426,36 @@ export function ContactSection() {
           {/* Socials block */}
           <div className="rounded-lg border border-white/10 bg-white/5 p-4 text-sm">
             <p className="text-xs font-bold text-foreground sm:text-sm">
-              {socialsBlock?.title ?? "More of my work & socials"}
+              {socialsBlockCfg?.title ?? "More of my work & socials"}
             </p>
             <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
-              {socialsBlock?.description ??
+              {socialsBlockCfg?.description ??
                 "Quick links to my profiles and other places where I share projects, updates, and resources."}
             </p>
 
             <div className="mt-4 grid gap-2 sm:grid-cols-2 md:grid-cols-3">
-              {(socialsBlock?.links?.length
-                ? socialsBlock.links
-                : fallbackLinks
-              ).map((link, idx) => (
-                <ContactLink
-                  key={idx}
-                  icon={resolveIcon((link as SocialLink).icon)}
-                  label={(link as SocialLink).label}
-                  href={(link as SocialLink).href}
-                  detail={(link as SocialLink).detail}
-                />
-              ))}
+              {(hasConfiguredLinks ? contactLinks : fallbackLinks).map(
+                (link, idx) => {
+                  const isCopy =
+                    typeof link.href === "string" &&
+                    link.href.startsWith("copy:");
+                  return (
+                    <ContactLink
+                      key={idx}
+                      icon={resolveIcon(link.icon)}
+                      label={
+                        isCopy && copiedKey === link.label
+                          ? "Copied!"
+                          : link.label
+                      }
+                      href={link.href}
+                      detail={link.detail}
+                      onCopy={() => handleCopy(link.href, link.label)}
+                      copied={copiedKey === link.label}
+                    />
+                  );
+                }
+              )}
             </div>
           </div>
         </div>
@@ -490,12 +506,39 @@ function ContactLink({
   label,
   href,
   detail,
+  onCopy,
+  copied,
 }: {
   icon: ReactNode;
   label: string;
   href: string;
   detail?: string;
+  onCopy?: () => void;
+  copied?: boolean;
 }) {
+  const isCopy = href?.startsWith("copy:");
+  if (isCopy) {
+    return (
+      <button
+        type="button"
+        onClick={onCopy}
+        className="flex items-center justify-between gap-2 rounded-md border border-white/10 bg-transparent px-3 py-2 text-left text-xs text-muted-foreground transition hover:border-accent hover:bg-white/5 hover:text-foreground sm:text-sm"
+        aria-label={`Copy ${label}`}
+        title="Copy to clipboard"
+      >
+        <span className="inline-flex items-center gap-2">
+          {icon}
+          <span className="font-medium">{copied ? "Copied!" : label}</span>
+        </span>
+        {detail && (
+          <span className="text-[11px] text-muted-foreground sm:text-xs">
+            {copied ? "Done" : detail}
+          </span>
+        )}
+      </button>
+    );
+  }
+
   return (
     <a
       href={href}

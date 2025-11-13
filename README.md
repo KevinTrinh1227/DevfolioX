@@ -12,7 +12,7 @@
 
   "stats_stars": true,
   "stats_forks": true,
-  "stats_downloads": false,
+  "stats_downloads": true,
 
   "links": [
     {
@@ -59,7 +59,6 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 </div>
 
 ---
-
 
 <p align="center"><strong>Table of Contents</strong></p>
 <p align="center">
@@ -211,73 +210,74 @@ All integrations are optional and can be toggled or left unconfigured, keeping D
 
 ---
 
-  ## 🧩 Configuration & Setup
+## 🧩 Configuration & Setup
 
-  DevfolioX is **config-driven**, so you can customize it quickly without rewriting components:
+DevfolioX is **config-driven**, so you can customize it quickly without rewriting components:
 
-  - Core content such as your name, tagline, socials, section toggles, theme, resume/CV options, and sponsor URL is controlled through a main configuration file.
-  - Structured data such as education, experience, achievements, research, and open source work is defined in small, focused config files or modules.
-  - Projects can be controlled via hidden metadata blocks in each GitHub repo’s README, allowing you to choose which repos appear and how they are presented.
+- Core content such as your name, tagline, socials, section toggles, theme, resume/CV options, and sponsor URL is controlled through a main configuration file.
+- Structured data such as education, experience, achievements, research, and open source work is defined in small, focused config files or modules.
+- Projects can be controlled via hidden metadata blocks in each GitHub repo’s README, allowing you to choose which repos appear and how they are presented.
 
-  ### Local setup
+### Local setup
 
-  1. Clone or fork this repository:
-     ```bash
-     git clone https://github.com/YOUR_GITHUB_USERNAME/devfoliox.git
-     cd devfoliox
-     ```
-  2. Install dependencies:
-     ```bash
-     npm install
-     ```
-  3. Configure your content:
-     - Edit the main config file (for example `siteConfig`) to set your name, socials, section toggles, theme, resume/CV settings, and sponsor URL.
-     - Fill out the data files for education, experience, achievements, research, and open source contributions.
-     - Optionally add hidden metadata blocks to the README of any GitHub repos you want to feature as projects.
-  4. (Optional) Use the config wizard:
-     - Start the dev server:
-       ```bash
-       npm run dev
-       ```
-     - Open `http://localhost:3000/config` in your browser.
-     - Fill out the form to generate a ready-to-paste config snippet.
-     - Paste the generated snippet into the main config file.
-  5. Run locally:
+1. Clone or fork this repository:
+   ```bash
+   git clone https://github.com/YOUR_GITHUB_USERNAME/devfoliox.git
+   cd devfoliox
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Configure your content:
+   - Edit the main config file (for example `siteConfig`) to set your name, socials, section toggles, theme, resume/CV settings, and sponsor URL.
+   - Fill out the data files for education, experience, achievements, research, and open source contributions.
+   - Optionally add hidden metadata blocks to the README of any GitHub repos you want to feature as projects.
+4. (Optional) Use the config wizard:
+   - Start the dev server:
      ```bash
      npm run dev
      ```
-     Then open `http://localhost:3000` to preview your portfolio.
+   - Open `http://localhost:3000/config` in your browser.
+   - Fill out the form to generate a ready-to-paste config snippet.
+   - Paste the generated snippet into the main config file.
+5. Run locally:
+   ```bash
+   npm run dev
+   ```
+   Then open `http://localhost:3000` to preview your portfolio.
 
-  ### Setup for deployment (Vercel / Netlify)
+### Setup for deployment (Vercel / Netlify)
 
-  Before deploying, ensure that:
+Before deploying, ensure that:
 
-  - You have created any necessary environment variables (for example GitHub tokens, email provider keys, Discord webhooks, Telegram bot token) in a `.env.local` file for local testing.
-  - The same environment variables are added to your Vercel or Netlify project settings.
-  - Optional integrations you do not plan to use are either disabled in config or left unconfigured so they fail gracefully.
+- You have created any necessary environment variables (for example GitHub tokens, email provider keys, Discord webhooks, Telegram bot token) in a `.env.local` file for local testing.
+- The same environment variables are added to your Vercel or Netlify project settings.
+- Optional integrations you do not plan to use are either disabled in config or left unconfigured so they fail gracefully.
 
-  Once local setup is working, follow the deployment steps below.
+Once local setup is working, follow the deployment steps below.
 
-  ---
+---
 
-  ## 🚀 Deployment
+## 🚀 Deployment
 
-  DevfolioX is built to deploy smoothly on platforms that support Next.js and serverless functions:
+DevfolioX is built to deploy smoothly on platforms that support Next.js and serverless functions:
 
-  - **Vercel**
-    - Push your repository to GitHub (or another supported Git provider).
-    - In Vercel, import the repository and allow it to detect the Next.js project.
-    - Set any required environment variables in the Vercel project settings.
-    - Deploy with the default Next.js settings; API routes and pages will be handled automatically.
+- **Vercel**
 
-  - **Netlify**
-    - Push your repository to GitHub (or another supported Git provider).
-    - In Netlify, import the repository and choose the Next.js build preset if available.
-    - Use a standard Next.js build command, for example:
-      ```bash
-      npm run build
-      ```
-    - Ensure environment variables are configured in the Netlify project settings for any integrations you enable.
-    - Deploy; Netlify will handle serverless functions and static assets from the build.
+  - Push your repository to GitHub (or another supported Git provider).
+  - In Vercel, import the repository and allow it to detect the Next.js project.
+  - Set any required environment variables in the Vercel project settings.
+  - Deploy with the default Next.js settings; API routes and pages will be handled automatically.
 
-  Because both the frontend and serverless API routes are defined inside this project, you do not need a separate backend server. For most students and individual developers, the free tiers of Vercel or Netlify are sufficient to host DevfolioX in production.
+- **Netlify**
+  - Push your repository to GitHub (or another supported Git provider).
+  - In Netlify, import the repository and choose the Next.js build preset if available.
+  - Use a standard Next.js build command, for example:
+    ```bash
+    npm run build
+    ```
+  - Ensure environment variables are configured in the Netlify project settings for any integrations you enable.
+  - Deploy; Netlify will handle serverless functions and static assets from the build.
+
+Because both the frontend and serverless API routes are defined inside this project, you do not need a separate backend server. For most students and individual developers, the free tiers of Vercel or Netlify are sufficient to host DevfolioX in production.

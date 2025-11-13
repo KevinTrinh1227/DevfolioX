@@ -1,0 +1,187 @@
+{
+  "name": "Kevin Trinh",
+  "title": "CS Student @ University of Houston",
+  "tagline": "I'm currently a student at the University of Houston, pursuing a Bachelor of Science in Computer Science. I have a profound interest in machine learning, operating systems, full-stack development, and everything in between.",
+  "location": "Houston, TX",
+
+  "socials": [
+    {
+      "key": "github",
+      "label": "GitHub",
+      "href": "https://github.com/kevintrinh1227",
+      "icon": "Github",
+      "detail": "My profile & projects",
+      "showIn": { "footer": true, "about": true, "contact": true }
+    },
+    {
+      "key": "linkedin",
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/YOUR_LINKEDIN_SLUG",
+      "icon": "Linkedin",
+      "detail": "in/kevintrinh1227",
+      "showIn": { "footer": true, "about": true, "contact": true }
+    },
+    {
+      "key": "devto",
+      "label": "Dev.to",
+      "href": "https://dev.to/YOUR_DEVTO_HANDLE",
+      "icon": "Code2",
+      "detail": "View my articles",
+      "showIn": { "footer": true, "about": true, "contact": true }
+    },
+    {
+      "key": "youtube",
+      "label": "YouTube",
+      "href": "https://www.youtube.com/@CoderTrinh",
+      "icon": "Youtube",
+      "detail": "View my channel",
+      "showIn": { "footer": true, "about": true, "contact": true }
+    },
+    {
+      "key": "email",
+      "label": "Email",
+      "href": "mailto:kevintrinh1227@gmail.com",
+      "icon": "Mail",
+      "detail": "kevintrinh1227@gmail.com",
+      "showIn": { "footer": true, "about": true, "contact": true }
+    },
+
+    {
+      "key": "discord",
+      "label": "Discord (Server)",
+      "href": null,
+      "icon": "MessageCircle",
+      "detail": null,
+      "showIn": { "footer": false, "about": false, "contact": false }
+    },
+    {
+      "key": "discordTag",
+      "label": "Discord",
+      "href": "copy:kevintrnh",
+      "icon": "MessageCircle",
+      "detail": "Copy my Discord tag",
+      "showIn": { "footer": true, "about": true, "contact": true }
+    },
+
+    {
+      "key": "medium",
+      "label": "Medium",
+      "href": null,
+      "icon": "PenSquare",
+      "detail": null,
+      "showIn": { "footer": false, "about": false, "contact": false }
+    },
+    {
+      "key": "telegram",
+      "label": "Telegram",
+      "href": null,
+      "icon": "Send",
+      "detail": null,
+      "showIn": { "footer": false, "about": false, "contact": false }
+    },
+    {
+      "key": "handshake",
+      "label": "Handshake",
+      "href": null,
+      "icon": "GraduationCap",
+      "detail": null,
+      "showIn": { "footer": true, "about": false, "contact": false }
+    }
+  ],
+
+  "nav": {
+    "items": [
+      { "id": "about", "label": "About", "show": true, "isButton": false },
+      {
+        "id": "education",
+        "label": "Education",
+        "show": true,
+        "isButton": false
+      },
+      {
+        "id": "experience",
+        "label": "Experience",
+        "show": true,
+        "isButton": false
+      },
+      {
+        "id": "projects",
+        "label": "Projects",
+        "show": true,
+        "isButton": false
+      },
+      { "id": "blog", "label": "Blogs", "show": true, "isButton": false },
+      { "id": "youtube", "label": "YouTube", "show": true, "isButton": false },
+      {
+        "id": "certifications",
+        "label": "Certifications",
+        "show": true,
+        "isButton": false
+      },
+      { "id": "resume", "label": "My Resume", "show": true, "isButton": true }
+    ]
+  },
+
+  "sections": {
+    "hero": true,
+    "about": true,
+    "education": true,
+    "experience": true,
+    "projects": true,
+    "blog": true,
+    "youtube": true,
+    "certifications": true,
+    "contact": true,
+    "resume": true
+  },
+
+  "repo": {
+    "url": "https://github.com/KevinTrinh1227/DevfolioX",
+    "lastCommitSha": "0a03d2a3698bf4095f1287bacaab7846dfb5e3d0",
+    "lastCommitMessage": "Refined layout, sections, and contact form",
+    "lastCommitDateISO": "2025-01-10T03:12:45Z",
+    "lastCommitUrl": "https://github.com/KevinTrinh1227/DevfolioX/commit/0a03d2a3698bf4095f1287bacaab7846dfb5e3d0",
+    "stars": 42,
+    "forks": 7,
+    "downloads": 120
+  },
+
+  "resume": {
+    "source": "google",
+    "googleDocId": "",
+    "file": {
+      "path": "Kevin_Trinh_Resume.pdf",
+      "url": ""
+    },
+    "filename": "Kevin_Trinh_Resume.pdf",
+    "cacheSeconds": 3600
+  },
+
+  "about": {
+    "intro": [
+      "I am currently an undergraduate student at the University of Houston pursuing a B.S. in Computer Science. I recently built a full stack app used by over 100+ users that allows UH students to get insights and AI schedule recommendations on their degree plan.",
+      "I have interests in various types of software development, including machine learning, operating systems, and full-stack development. I'm a huge enthusiast of desk setups and PCs. In my free time, I enjoy playing chess, thrifting, and video games."
+    ],
+    "currentlyLookingFor": "Internships / early-career SWE roles and open source collaboration.",
+    "avatarUrl": "/avatar.jpg",
+    "recentTools": [
+      "C++",
+      "Python",
+      "React",
+      "PostgreSQL",
+      "Google Cloud",
+      "Linux Ubuntu",
+      "Git"
+    ],
+    "moreDetails": [
+      "I’m particularly interested in how systems, infrastructure, and machine learning intersect — from efficient data pipelines to intelligent features that feel seamless to users.",
+      "Recently, I’ve been focusing on building projects that solve real problems for students and early-career developers, including tools that surface insights from academic data.",
+      "Outside of tech, I enjoy optimizing my workspace, learning new openings and tactics in chess, and hunting for unique finds while thrifting."
+    ]
+  },
+
+  "sponsor": {
+    "enabled": true,
+    "url": "https://github.com/sponsors/kevintrinh1227"
+  }
+}

@@ -31,45 +31,7 @@
 
   "socialsBlock": {
     "title": "More of my work & socials",
-    "description": "Quick links to my profiles and other places where I share projects, updates, and resources.",
-    "links": [
-      {
-        "icon": "Mail",
-        "label": "Email",
-        "href": "mailto:kevintrinh1227@gmail.com",
-        "detail": "kevintrinh1227@gmail.com"
-      },
-      {
-        "icon": "MessageCircle",
-        "label": "Discord",
-        "href": "https://discord.gg/YOUR_REAL_INVITE",
-        "detail": "Copy my Discord tag"
-      },
-      {
-        "icon": "Github",
-        "label": "GitHub",
-        "href": "https://github.com/kevintrinh1227",
-        "detail": "Profile & projects"
-      },
-      {
-        "icon": "Linkedin",
-        "label": "LinkedIn",
-        "href": "https://www.linkedin.com/in/YOUR_REAL_SLUG",
-        "detail": "My professional profile"
-      },
-      {
-        "icon": "FileText",
-        "label": "Dev.to",
-        "href": "https://dev.to/YOUR_REAL_HANDLE",
-        "detail": "Articles & posts"
-      },
-      {
-        "icon": "Youtube",
-        "label": "YouTube",
-        "href": "https://www.youtube.com/@CoderTrinh",
-        "detail": "View my channel"
-      }
-    ]
+    "description": "Quick links to my profiles and other places where I share projects, updates, and resources."
   },
 
   "templates": {

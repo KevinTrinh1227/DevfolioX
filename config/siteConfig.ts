@@ -1,122 +1,262 @@
 // config/siteConfig.ts
+import raw from "./site.json";
+
+type ShowIn = { footer?: boolean; about?: boolean; contact?: boolean };
+
+export type SocialItemInput = {
+  key: string;
+  label?: string;
+  href: string; // supports: "https://...", "mailto:...", "copy:VALUE"
+  icon?: string; // lucide-react icon name (e.g., "Github", "Mail")
+  showIn?: ShowIn; // per-section visibility; default = show everywhere
+  detail?: string; // optional right-side detail (Contact section)
+};
+
+export type SocialItem = SocialItemInput & {
+  // Computed flags for convenience
+  isCopy?: boolean; // true if href starts with "copy:"
+  copyValue?: string | null;
+};
+
+type RepoInfo = {
+  url?: string;
+  lastCommitSha?: string;
+  lastCommitMessage?: string;
+  lastCommitDateISO?: string;
+  lastCommitUrl?: string;
+  stars?: number;
+  forks?: number;
+  downloads?: number;
+};
+
+type ResumeDelivery = {
+  source?: "google" | "file";
+  googleDocId?: string;
+  file?: { path?: string; url?: string };
+  filename?: string;
+  cacheSeconds?: number;
+};
+
+// ----- NEW: nav types -----
+export type NavItemCfg = {
+  id?: string; // e.g., "about", "projects", "resume"
+  href?: string; // override link (external or internal)
+  label?: string; // visible text
+  show?: boolean; // toggle visibility
+  isButton?: boolean; // render as button (e.g., Resume)
+  external?: boolean; // force new tab
+};
+
+type NavConfig = {
+  items?: NavItemCfg[];
+};
+
+type SiteJson = {
+  name?: string;
+  title?: string;
+  tagline?: string;
+  location?: string;
+  socials?: SocialItemInput[] | Record<string, string>; // supports both new & legacy
+  sections?: Record<string, boolean>;
+  repo?: RepoInfo;
+  resume?: ResumeDelivery;
+  about?: any;
+  sponsor?: { enabled?: boolean; url?: string };
+  // ----- NEW: allow nav in site.json -----
+  nav?: NavConfig;
+};
+
+// ---------- helpers ----------
+function toShortSha(sha?: string) {
+  if (!sha) return null;
+  return sha.slice(0, 7);
+}
+
+function formatDateOnly(iso?: string) {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return null;
+  return d.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  });
+}
+
+/** Normalize "copy:" scheme into flags */
+function withCopyFlags(item: SocialItemInput): SocialItem {
+  const rawHref = (item.href || "").trim();
+  if (rawHref.startsWith("copy:")) {
+    const value = rawHref.slice("copy:".length);
+    return {
+      ...item,
+      isCopy: true,
+      copyValue: value || null,
+      href: rawHref, // keep original so components can decide behavior
+    };
+  }
+  return { ...item, isCopy: false, copyValue: null };
+}
+
+/**
+ * Accept either:
+ *  - new array form (with icon/per-section showIn), OR
+ *  - legacy object map (key -> href).
+ * Normalize into array of SocialItem (with isCopy/copyValue flags).
+ */
+function normalizeSocials(input?: SiteJson["socials"]): SocialItem[] {
+  if (!input) return [];
+
+  // New array form
+  if (Array.isArray(input)) {
+    return input
+      .filter(Boolean)
+      .map((s) =>
+        withCopyFlags({
+          key: s.key,
+          label: s.label || s.key,
+          href: s.href,
+          icon: s.icon,
+          showIn: s.showIn || {}, // default show everywhere handled below
+          detail: s.detail,
+        })
+      )
+      .map((s) => ({
+        // default: show everywhere unless explicitly false
+        ...s,
+        showIn: {
+          footer: s.showIn?.footer !== false,
+          about: s.showIn?.about !== false,
+          contact: s.showIn?.contact !== false,
+        },
+      }))
+      .filter((s) => !!s.key && !!s.href);
+  }
+
+  // Legacy object form -> convert to basic list (show everywhere)
+  const out: SocialItem[] = [];
+  for (const [key, href] of Object.entries(input)) {
+    if (!href) continue;
+    out.push(
+      withCopyFlags({
+        key,
+        label: key[0].toUpperCase() + key.slice(1),
+        href,
+        icon: undefined,
+        showIn: { footer: true, about: true, contact: true },
+      })
+    );
+  }
+  return out;
+}
+
+/**
+ * For back-compat, produce a flat map like:
+ * { github?: string, linkedin?: string, devto?: string, email?: string, ... }
+ * NOTE: we pass through the raw href (which can be "copy:..."). Components that
+ * use this flat map should either filter out copy entries or handle them.
+ */
+function socialsToFlatMap(socials: SocialItem[]) {
+  const map: Record<string, string> = {};
+  for (const s of socials) {
+    map[s.key] = s.href;
+  }
+  return map;
+}
+
+const data = (raw as SiteJson) || {};
+
+// ── Socials: normalized arrays + flat map (for legacy components)
+const socialsList = normalizeSocials(data.socials);
+const socialsFlat = socialsToFlatMap(socialsList);
+
+// Per-section filtered arrays (copy-aware)
+const socialsFor = {
+  footer: socialsList.filter((s) => s.showIn?.footer),
+  about: socialsList.filter((s) => s.showIn?.about),
+  contact: socialsList.filter((s) => s.showIn?.contact),
+};
+
+// ── Repo helpers
+const repo: RepoInfo = data.repo || {};
+const shortSha = toShortSha(repo.lastCommitSha || undefined);
+const lastCommitDateFormatted = formatDateOnly(
+  repo.lastCommitDateISO || undefined
+);
+
+// ── Resume delivery (server/browser cache window)
+const resumeDelivery: ResumeDelivery = {
+  source: data.resume?.source || "google",
+  googleDocId: data.resume?.googleDocId || "",
+  file: data.resume?.file || { path: "Kevin_Trinh_Resume.pdf", url: "" },
+  filename: data.resume?.filename || "Kevin_Trinh_Resume.pdf",
+  cacheSeconds: Number.isFinite(Number(data.resume?.cacheSeconds))
+    ? Number(data.resume?.cacheSeconds)
+    : 3600,
+};
+
+// ── Sections default flags
+const defaultSections = {
+  hero: true,
+  about: true,
+  education: true,
+  experience: true,
+  projects: true,
+  blog: true,
+  youtube: true,
+  certifications: true,
+  contact: true,
+  resume: true,
+};
+
 export const siteConfig = {
-  name: "Kevin Trinh",
-  title: "CS Student @ University of Houston",
+  name: data.name || "Kevin Trinh",
+  title: data.title || "CS Student @ University of Houston",
   tagline:
+    data.tagline ||
     "I'm currently a student at the University of Houston, pursuing a Bachelor of Science in Computer Science. I have a profound interest in machine learning, operating systems, full-stack development, and everything in between.",
-  location: "Houston, TX",
+  location: data.location || "Houston, TX",
 
-  socials: {
-    github: "https://github.com/kevintrinh1227",
-    linkedin: "https://www.linkedin.com/in/YOUR_LINKEDIN_SLUG", // TODO: replace with your real slug
-    devto: "https://dev.to/YOUR_DEVTO_HANDLE", // (optional) replace or leave empty
-    medium: "https://medium.com/@YOUR_MEDIUM_HANDLE", // (optional)
-    youtube: "https://www.youtube.com/@CoderTrinh",
-    email: "you@example.com", // TODO: replace (used by the "Email me directly" button)
-    handshake: "",
-    telegram: "", // public profile/invite (NOT the bot token/chat id)
-    discord: "https://discord.gg/YOUR_DISCORD_LINK", // (optional) can also be a user profile URL
-  },
+  // Back-compat map used by some components
+  socials: socialsFlat,
 
-  // Repo info shown in the UI (static; for live stats you already fetch via loaders)
+  // New richer socials exports
+  socialsList, // full list with isCopy/copyValue
+  socialsFor, // per-section filtered lists
+
+  // Sections flags
+  sections: { ...defaultSections, ...(data.sections || {}) },
+
+  // NEW: nav passthrough (typed above)
+  nav: data.nav || undefined,
+
+  // Repo + preformatted helpers
   repo: {
-    url: "https://github.com/kevintrinh1227/devfoliox",
-    lastUpdated: "Jan 10, 2025",
-    lastCommit: "Refined layout, sections, and contact form",
-    stars: 42,
-    forks: 7,
-    downloads: 120,
+    url: repo.url,
+    lastCommitSha: repo.lastCommitSha,
+    lastCommitMessage: repo.lastCommitMessage,
+    lastCommitDateISO: repo.lastCommitDateISO,
+    lastCommitUrl: repo.lastCommitUrl,
+    stars: repo.stars,
+    forks: repo.forks,
+    downloads: repo.downloads,
+
+    // helpers
+    shortSha,
+    lastCommitDateFormatted, // e.g., "Jan 10, 2025"
   },
 
-  sections: {
-    hero: true,
-    about: true,
-    education: true,
-    experience: true,
-    achievements: true,
-    research: true,
-    openSource: true,
-    projects: true,
-    blog: true,
-    youtube: true,
-    certifications: true,
-    codingStats: true,
-    contact: true,
-    resume: true,
-  },
+  // About passthrough
+  about: data.about || {},
 
-  theme: {
-    mode: "system", // 'light' | 'dark' | 'system'
-    accent: "indigo", // tailwind accent key you’re using
-  },
+  // Resume delivery
+  resumeDelivery,
 
-  // Centralized contact-form UI caps/messages (server still enforces)
-  contact: {
-    nameMaxLength: 80,
-    emailMaxLength: 254,
-    messageMaxLength: 2000,
-    // Updated success text per your request
-    successText: "Message Successfully Sent. I'll get back to you soon!",
-    errorText: "Something went wrong. Please try again.",
+  // Keep placeholder for structured resume items if you add later
+  resume: { items: [] },
 
-    // Optional: use these to drive the Subject <select> (with "Custom..." handled in the UI)
-    topicOptions: [
-      "General message",
-      "Role / Opportunity",
-      "Question about a project",
-      "Business Inquiry",
-      "Other",
-    ] as const,
-  },
-
-  about: {
-    intro: [
-      "I am currently an undergraduate student at the University of Houston pursuing a B.S. in Computer Science. I recently built a full stack app used by over 100+ users that allows UH students to get insights and AI schedule recommendations on their degree plan.",
-      "I have interests in various types of software development, including machine learning, operating systems, and full-stack development. I'm a huge enthusiast of desk setups and PCs. In my free time, I enjoy playing chess, thrifting, and video games.",
-    ],
-    currentlyLookingFor:
-      "Internships / early-career SWE roles and open source collaboration.",
-    avatarUrl: "/avatar.jpg",
-    recentTools: [
-      "C++",
-      "Python",
-      "React",
-      "PostgreSQL",
-      "Google Cloud",
-      "Linux Ubuntu",
-      "Git",
-    ],
-    moreDetails: [
-      "I’m particularly interested in how systems, infrastructure, and machine learning intersect — from efficient data pipelines to intelligent features that feel seamless to users.",
-      "Recently, I’ve been focusing on building projects that solve real problems for students and early-career developers, including tools that surface insights from academic data.",
-      "Outside of tech, I enjoy optimizing my workspace, learning new openings and tactics in chess, and hunting for unique finds while thrifting.",
-    ],
-  },
-
-  // NEW: resume delivery config (used by /api/resume or /resume.pdf route)
-  // - source: "google" (live export) or "file" (serve static PDF)
-  // - googleDocId: leave empty if you prefer to keep it in env (RESUME_GOOGLE_DOC_ID)
-  // - file.path: file under /public (e.g., /resume.static.pdf)
-  // - file.url: remote PDF if you host it elsewhere
-  // - filename: suggested filename for download header
-  // - cacheSeconds: server/browser cache window
-  resumeDelivery: {
-    source: "google" as "google" | "file",
-    googleDocId: "", // prefer env RESUME_GOOGLE_DOC_ID; this is a fallback
-    file: {
-      path: "/resume.static.pdf",
-      url: "",
-    },
-    filename: "Kevin_Trinh_Resume.pdf",
-    cacheSeconds: 3600,
-  },
-
-  // Keep your previous placeholder for future structured resume items if you need it
-  resume: {
-    items: [],
-  },
-
-  sponsor: {
+  // Sponsor
+  sponsor: data.sponsor || {
     enabled: true,
     url: "https://github.com/sponsors/kevintrinh1227",
   },

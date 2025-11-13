@@ -14,6 +14,12 @@ const CONTACT_FROM_EMAIL =
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 
+// New: configurable daily cap (per IP). Default 1 per 24h.
+const CONTACT_DAILY_LIMIT = Math.max(
+  1,
+  Number.parseInt(process.env.CONTACT_DAILY_LIMIT || "1", 10)
+);
+
 // ─── CLIENTS ─────────────────────────────────────────────────────────────────
 const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
@@ -45,7 +51,10 @@ function fill(tpl: string, vars: Record<string, string>) {
 }
 
 function escapeHtml(s: string) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;/g,")
+    .replace(/>/g, "&gt;");
 }
 
 // Avoid Discord pings like @everyone
@@ -55,16 +64,17 @@ function sanitizeForDiscord(s: string) {
 
 // Request IP best-effort
 function getIP(req: NextRequest | Request): string {
-  // NextRequest has .headers same API
   const xfwd = (req.headers.get("x-forwarded-for") || "").split(",")[0].trim();
   return xfwd || req.headers.get("x-real-ip") || "0.0.0.0";
 }
 
-// Simple in-memory rate limit (per instance)
+// ─── RATE LIMITING ───────────────────────────────────────────────────────────
+
+// Existing minute window limiter (per instance)
 const WINDOW_MS = 60_000;
 const MAX_REQ = 5;
 const hits = new Map<string, { count: number; ts: number }>();
-function rateLimit(ip: string) {
+function minuteRateLimit(ip: string) {
   const now = Date.now();
   const rec = hits.get(ip);
   if (!rec || now - rec.ts > WINDOW_MS) {
@@ -76,7 +86,45 @@ function rateLimit(ip: string) {
   return true;
 }
 
-// Small fetch helper with timeout
+// New: daily limiter (per instance) – 1 key per IP per UTC day
+type DailyRecord = { count: number; expiresAt: number };
+const dailyHits = new Map<string, DailyRecord>();
+
+function currentUtcDayKey() {
+  // YYYY-MM-DD (UTC) so it rolls over uniformly
+  const now = new Date();
+  const y = now.getUTCFullYear();
+  const m = String(now.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(now.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+// Returns true if allowed, false if over limit. Also returns seconds until reset.
+function dailyRateLimit(ip: string): { ok: boolean; retryAfterSec: number } {
+  const key = `${ip}:${currentUtcDayKey()}`;
+
+  const now = Date.now();
+  // seconds to midnight UTC
+  const tomorrow = new Date();
+  tomorrow.setUTCHours(24, 0, 0, 0);
+  const retryAfterSec = Math.max(
+    1,
+    Math.ceil((tomorrow.getTime() - now) / 1000)
+  );
+
+  const rec = dailyHits.get(key);
+  if (!rec || now >= rec.expiresAt) {
+    dailyHits.set(key, { count: 1, expiresAt: tomorrow.getTime() });
+    return { ok: true, retryAfterSec };
+  }
+  if (rec.count >= CONTACT_DAILY_LIMIT) {
+    return { ok: false, retryAfterSec };
+  }
+  rec.count++;
+  return { ok: true, retryAfterSec };
+}
+
+// ─── Small fetch helper with timeout ─────────────────────────────────────────
 async function fetchWithTimeout(
   url: string,
   init: RequestInit,
@@ -95,10 +143,28 @@ async function fetchWithTimeout(
 // ─── HANDLER ─────────────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
   const ip = getIP(req);
-  if (!rateLimit(ip)) {
+
+  // 1) Minute limiter first (burst control)
+  if (!minuteRateLimit(ip)) {
     return NextResponse.json(
-      { error: "Too many requests. Please try again shortly." },
-      { status: 429 }
+      { error: "Too many requests. Please slow down and try again shortly." },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
+  // 2) Daily limiter (hard cap)
+  const daily = dailyRateLimit(ip);
+  if (!daily.ok) {
+    return NextResponse.json(
+      {
+        error: `Daily limit reached. You can send another message in about ${Math.ceil(
+          daily.retryAfterSec / 3600
+        )} hour(s).`,
+      },
+      {
+        status: 429,
+        headers: { "Retry-After": String(daily.retryAfterSec) },
+      }
     );
   }
 
@@ -117,7 +183,6 @@ export async function POST(req: NextRequest) {
     message,
     hp, // honeypot
     startedAt,
-    sendCopy,
   }: {
     name?: string;
     email?: string;
@@ -125,10 +190,9 @@ export async function POST(req: NextRequest) {
     message?: string;
     hp?: string;
     startedAt?: number;
-    sendCopy?: boolean;
   } = body || {};
 
-  // Honeypot or suspiciously instant submit → silently succeed
+  // Honeypot or suspiciously instant submit → quietly block
   if (hp && String(hp).trim()) {
     return NextResponse.json({ ok: true }, { status: 200 });
   }
@@ -227,14 +291,6 @@ export async function POST(req: NextRequest) {
   const emailHtmlTpl =
     tpl?.email?.html ??
     "<div style='font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;color:#0b1220'><h2 style='margin:0 0 8px'>New contact form submission</h2><p style='margin:4px 0'><strong>Name:</strong> {{name}}</p><p style='margin:4px 0'><strong>Email:</strong> {{email}}</p><p style='margin:4px 0'><strong>Subject:</strong> {{subject}}</p><pre style='white-space:pre-wrap;background:#f6f8fa;padding:12px;border-radius:8px;border:1px solid #e5e7eb'>{{message}}</pre><p style='margin-top:10px;color:#64748b'>Received: {{timestamp_fmt}} • IP: {{ip}}</p></div>";
-  const ackSubjectTpl =
-    tpl?.email?.ackSubject ?? "Thanks — I received your message";
-  const ackTextTpl =
-    tpl?.email?.ackText ??
-    "Hi {{name}},\n\nThanks for your message about {{subject}}.\nI'll get back to you soon.\n\n— Kevin";
-  const ackHtmlTpl =
-    tpl?.email?.ackHtml ??
-    "<div style='font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;color:#0b1220'><p>Hi {{name}},</p><p>Thanks for your message about <strong>{{subject}}</strong>.</p><p>I'll get back to you soon.</p><p>— Kevin</p></div>";
 
   // Rendered
   let discordContent = sanitizeForDiscord(fill(discordContentRaw, varsRaw));
@@ -248,17 +304,6 @@ export async function POST(req: NextRequest) {
   const emailSubject = fill(emailSubjectTpl, varsRaw);
   const emailText = fill(emailTextTpl, varsRaw);
   const emailHtml = fill(emailHtmlTpl, varsHtml);
-
-  const ackSubject = fill(ackSubjectTpl, varsRaw);
-  const ackText = fill(ackTextTpl, varsRaw);
-  const ackHtml = fill(ackHtmlTpl, varsHtml);
-
-  if (emailText.length + emailHtml.length > EMAIL_CONTENT_MAX) {
-    return NextResponse.json(
-      { error: "Email content too large." },
-      { status: 400 }
-    );
-  }
 
   // ─── Deliver ────────────────────────────────────────────────────────────────
   const warnings: string[] = [];
@@ -294,7 +339,6 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify({
             chat_id: TELEGRAM_CHAT_ID,
             text: telegramText,
-            parse_mode: "HTML", // we didn't add HTML tags, safe; or omit
             disable_web_page_preview: true,
           }),
         },
@@ -319,16 +363,6 @@ export async function POST(req: NextRequest) {
         html: emailHtml,
       });
       delivered = true;
-
-      if (sendCopy && emailRx.test(_email)) {
-        await resend.emails.send({
-          from: CONTACT_FROM_EMAIL,
-          to: [_email],
-          subject: ackSubject,
-          text: ackText,
-          html: ackHtml,
-        });
-      }
     } catch {
       warnings.push("Email delivery failed.");
     }

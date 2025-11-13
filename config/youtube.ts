@@ -1,4 +1,5 @@
 // config/youtube.ts
+import raw from "./youtube.json";
 
 export type YouTubeVideoCategory = "Project" | "Tutorial" | "Dev Log" | "Other";
 
@@ -14,41 +15,6 @@ export type YouTubeVideo = {
   views?: string;
 };
 
-export const youtubeVideos: YouTubeVideo[] = [
-  {
-    id: "reactfolio-setup",
-    title: "Reactfolio – setting up a React portfolio from scratch",
-    description:
-      "Step-by-step setup of Reactfolio, customizing sections, and deploying to a free hosting provider.",
-    url: "https://youtu.be/CXkb_SuDoDc?si=eDXowS8I_JfM63v7",
-    thumbnailUrl: "https://img.youtube.com/vi/CXkb_SuDoDc/hqdefault.jpg",
-    category: "Tutorial",
-    duration: "14:03",
-    date: "Dec, 2024",
-    views: "1.2K",
-  },
-  {
-    id: "most-recent-video",
-    title: "Reactfolio: A React.js Portfolio Template for Developers",
-    description:
-      "My most recent video on YouTube. You can update this title and description to match the actual content.",
-    url: "https://youtu.be/CxXi6HXS5Os?si=KikQ6XVAgqdCSPpN",
-    thumbnailUrl: "https://img.youtube.com/vi/CxXi6HXS5Os/hqdefault.jpg",
-    category: "Other",
-    duration: "0:00",
-    date: "May, 2024",
-    views: "350",
-  },
-  {
-    id: "react-reveal-guide",
-    title: "React Awesome Reveal NPM: On Scroll Animation Guide For React.JS",
-    description:
-      "A quick guide where I demonstrate 3 examples of the react-awesome-reveal library for my personal portfolio website. This video is using Node v16.20.X.",
-    url: "https://youtu.be/K1qKbZqBh0w?si=_yLIVagjHXLxbzAg",
-    thumbnailUrl: "https://img.youtube.com/vi/K1qKbZqBh0w/hqdefault.jpg",
-    category: "Project",
-    duration: "12:28",
-    date: "Aug, 2023",
-    views: "2.1K",
-  },
-];
+// Optionally validate/transform here if needed.
+// For now we trust the JSON file shape.
+export const youtubeVideos = raw as YouTubeVideo[];
