@@ -7,13 +7,23 @@
     "It centralizes projects, experience, writing, and contact into a single minimal layout while remaining easy to configure and deploy on free hosting."
   ],
   "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
-  "start": "Jan 2025",
-  "end": "Present",
-
+  "badges": [
+    "https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white",
+    "https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white",
+    "https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white",
+    "https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white",
+    "https://img.shields.io/badge/dev.to-0A0A0A?style=for-the-badge&logo=devdotto&logoColor=white",
+    "https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white",
+    "https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white",
+    "https://img.shields.io/badge/Google%20Docs-4285F4?style=for-the-badge&logo=google-docs&logoColor=white",
+    "https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"
+  ],
+  "start": "AUTO",
+  "end": "AUTO",
+  "auto_inactive_threshold_days": 90,
   "stats_stars": true,
   "stats_forks": true,
   "stats_downloads": true,
-
   "links": [
     {
       "label": "Live Demo",
@@ -24,6 +34,11 @@
       "label": "Source",
       "href": "https://github.com/KevinTrinh1227/DevfolioX",
       "type": "github"
+    },
+    {
+      "label": "Download ZIP",
+      "href": "https://github.com/KevinTrinh1227/DevfolioX/archive/refs/heads/main.zip",
+      "type": "download"
     }
   ]
 }
