@@ -45,14 +45,15 @@
 -->
 <div align="center">
 
-# 👨‍💻 DevfolioX 
+# 👨‍💻 DevfolioX
 
 A minimal, user-friendly, responsive dev/personal portfolio template that integrates with numerous platforms and offers tons of useful functionality. Built with **Next.js** and **Tailwind CSS**.
 
+<!--
 [![Downloads](https://img.shields.io/github/downloads/KevinTrinh1227/devfoliox/total?style=for-the-badge&logo=github)](#)
 [![Stars](https://img.shields.io/github/stars/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 [![Forks](https://img.shields.io/github/forks/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
-[![Latest Release](https://img.shields.io/github/v/release/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
+[![Latest Release](https://img.shields.io/github/v/release/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#) -->
 
 <img
     alt="Screen Shot from 10-03-2023 of landing page."
@@ -74,7 +75,7 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 
 <p align="center"><strong>Table of Contents</strong></p>
 <p align="center">
-  <a href="#-about">About</a> •
+  <a href="#-about-devfoliox">About</a> •
   <a href="#-features--integrations">Features</a> •
   <a href="#-core-sections">Core Sections</a> •
   <a href="#-configuration--setup">Configuration &amp; Setup</a> •
@@ -83,7 +84,7 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 
 ---
 
-## 🌐 What is DevfolioX?
+## 🌐 About DevFolioX
 
 **DevfolioX** is a minimal, config-driven portfolio template built for developers and students who want a clean, professional online presence without a lot of overhead. It centralizes your projects, experience, writing, videos, resume/CV, and contact into a single responsive page.
 
@@ -114,170 +115,174 @@ All integrations degrade gracefully: if you don’t configure something, the rel
 
 ---
 
-  ## 📚 Core Sections
+## 📚 Core Sections
 
-  - **Hero** – Quick intro with your name, role, short value statement, and primary call-to-action buttons (e.g. “View Projects”, “Contact”, “Resume”) plus key social icons.
-  - **About** – Short bio, what you work on, and a compact skills/tech stack snapshot.
-  - **Education** – Schools, degrees, dates, locations, and optional coursework/activities.
-  - **Experience** – Internships and jobs with role, company, dates, and impact-focused bullets.
-  - **Achievements & Certifications** – Certifications, awards, scholarships, and competitions with tags and optional proof links.
-  - **Research & Publications** – Optional section for research projects, posters, talks, and papers with links to PDFs, slides, or code.
-  - **Open Source Contributions** – Highlights external repos you’ve contributed to, with links to PRs/issues.
-  - **Projects** – Your own repos, configured via hidden README metadata (or config), with titles, descriptions, tools, buttons, GitHub stats, and an optional detailed modal using the README content.
-  - **Blog / Writing** – Recent posts from platforms like Dev.to / Medium so your writing stays in sync without manual copying.
-  - **YouTube** – Featured video and/or recent uploads to surface tutorials, devlogs, or project walkthroughs.
-  - **Coding Stats** – Optional lightweight metrics (e.g. GitHub activity or problem-solving stats) for a quick activity snapshot.
-  - **Contact** – Focused contact form with multi-channel notifications, plus direct profile/contact links.
-  - **Resume & CV Viewer** – Inline PDF viewer for your resume/CV with “last updated” metadata and a download button.
+- **Hero** – Quick intro with your name, role, short value statement, and primary call-to-action buttons (e.g. “View Projects”, “Contact”, “Resume”) plus key social icons.
+- **About** – Short bio, what you work on, and a compact skills/tech stack snapshot.
+- **Education** – Schools, degrees, dates, locations, and optional coursework/activities.
+- **Experience** – Internships and jobs with role, company, dates, and impact-focused bullets.
+- **Achievements & Certifications** – Certifications, awards, scholarships, and competitions with tags and optional proof links.
+- **Research & Publications** – Optional section for research projects, posters, talks, and papers with links to PDFs, slides, or code.
+- **Open Source Contributions** – Highlights external repos you’ve contributed to, with links to PRs/issues.
+- **Projects** – Your own repos, configured via hidden README metadata (or config), with titles, descriptions, tools, buttons, GitHub stats, and an optional detailed modal using the README content.
+- **Blog / Writing** – Recent posts from platforms like Dev.to / Medium so your writing stays in sync without manual copying.
+- **YouTube** – Featured video and/or recent uploads to surface tutorials, devlogs, or project walkthroughs.
+- **Coding Stats** – Optional lightweight metrics (e.g. GitHub activity or problem-solving stats) for a quick activity snapshot.
+- **Contact** – Focused contact form with multi-channel notifications, plus direct profile/contact links.
+- **Resume & CV Viewer** – Inline PDF viewer for your resume/CV with “last updated” metadata and a download button.
 
-  ---
+---
 
-  ## 🧩 Configuration & Setup
+## 🧩 Configuration & Setup
 
-  DevfolioX is **config-driven**. Most customization is done by editing small config files instead of React components.
+DevfolioX is **config-driven**. Most customization is done by editing small config files instead of React components.
 
-  1. **Download DevFolioX**  
+1. **Download DevFolioX**
 
-     - [Download latest stable release](https://github.com/YOUR_GITHUB_USERNAME/devfoliox/releases/latest) (recommended)
-     - Or Clone the repository
-       
-       ```bash
-       git clone https://github.com/KevinTrinh1227/DevfolioX
-       ```
-       ```bash
-       cd devfoliox
-       ```
-       ```bash
-       npm install
-       ```
-
-  2. **Set up core site config**
-
-     Update the main site config (for example `config/siteConfig.ts`) with:
-
-     - Your name, tagline, and location
-     - Social links (GitHub, LinkedIn, email, etc.)
-     - Which sections are enabled/disabled
-     - Theme options (if any)
-     - Resume/CV viewer settings
-
-  3. **Fill out structured data**
-
-     Edit the config files for your content (file names may vary slightly):
-
-     - `config/education` – degrees, schools, dates
-     - `config/experience` – roles, companies, bullet points
-     - `config/certifications` / `config/achievements` – awards, certs, competitions
-     - `config/research` – research/projects/talks (optional)
-     - `config/openSource` – open source contributions (optional)
-     - `config/projects.json` – local projects and any GitHub-backed project overrides
-
-  4. **Configure projects**
-
-     For GitHub-backed projects, you can use a hidden block in each repo’s README:
-
-     ```html
-     <!-- devfoliox
-     {
-       "title": "My Project",
-       "summary": "Short summary here.",
-       "description": ["Longer description paragraph 1.", "Paragraph 2."],
-       "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
-       "start": "AUTO",
-       "end": "AUTO",
-       "auto_inactive_threshold_days": 90,
-       "stats_stars": true,
-       "stats_forks": true,
-       "stats_downloads": true,
-       "links": [
-         { "label": "Live Demo", "href": "https://example.com", "type": "live" },
-         { "label": "Source", "href": "https://github.com/you/repo", "type": "github" }
-       ],
-       "badges": [
-         "https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"
-       ]
-     }
-     -->
-     ```
-
-     The app will read this at build time, pull GitHub stats (if enabled), and use repo metadata (topics, homepage, created/last push dates) to auto-fill dates and details.
-
-  5. **Environment variables (.env.local)**
-
-     Create a `.env.local` file in the project root to enable contact notifications and the resume viewer. Only set the ones you plan to use:
+   - [Download latest stable release](https://github.com/YOUR_GITHUB_USERNAME/devfoliox/releases/latest) (recommended)
+   - Or Clone the repository
 
      ```bash
-     DISCORD_CONTACT_WEBHOOK_URL=https://discord.com/api/webhooks/your_webhook_id/your_webhook_token
-
-     RESUME_GOOGLE_DOC_ID=your_google_doc_id_here
-
-     RESEND_API_KEY=your_resend_api_key_here
-     CONTACT_TO_EMAIL=your_destination_email_here
-     CONTACT_FROM_EMAIL=your_verified_from_email_here
-
-     TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
-     TELEGRAM_CHAT_ID=your_telegram_chat_id_here
-
-     # Optional: higher GitHub API rate limits for stats
-     # GITHUB_TOKEN=your_github_personal_access_token_here
+     git clone https://github.com/KevinTrinh1227/DevfolioX
      ```
-
-  6. **Run locally**
 
      ```bash
-     npm run dev
+     cd devfoliox
      ```
 
-     Then visit `http://localhost:3000` to preview your portfolio.
+     ```bash
+     npm install
+     ```
 
-  ---
+2. **Set up core site config**
 
-  ## 🚀 Deployment
+   Update the main site config (for example `config/siteConfig.ts`) with:
 
-  DevfolioX is a standard Next.js app and can run anywhere that supports Node and Next.js.
+   - Your name, tagline, and location
+   - Social links (GitHub, LinkedIn, email, etc.)
+   - Which sections are enabled/disabled
+   - Theme options (if any)
+   - Resume/CV viewer settings
 
-  - **Local production build**
+3. **Fill out structured data**
 
-    ```bash
-    npm run build
-    ```
-    ```bash
-    npm start
-    ```
-    App runs in production mode, usually on `http://localhost:3000`
+   Edit the config files for your content (file names may vary slightly):
+
+   - `config/education` – degrees, schools, dates
+   - `config/experience` – roles, companies, bullet points
+   - `config/certifications` / `config/achievements` – awards, certs, competitions
+   - `config/research` – research/projects/talks (optional)
+   - `config/openSource` – open source contributions (optional)
+   - `config/projects.json` – local projects and any GitHub-backed project overrides
+
+4. **Configure projects**
+
+   For GitHub-backed projects, you can use a hidden block in each repo’s README:
+
+   ```html
+   <!-- devfoliox
+   {
+     "title": "My Project",
+     "summary": "Short summary here.",
+     "description": ["Longer description paragraph 1.", "Paragraph 2."],
+     "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
+     "start": "AUTO",
+     "end": "AUTO",
+     "auto_inactive_threshold_days": 90,
+     "stats_stars": true,
+     "stats_forks": true,
+     "stats_downloads": true,
+     "links": [
+       { "label": "Live Demo", "href": "https://example.com", "type": "live" },
+       { "label": "Source", "href": "https://github.com/you/repo", "type": "github" }
+     ],
+     "badges": [
+       "https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"
+     ]
+   }
+   -->
+   ```
+
+   The app will read this at build time, pull GitHub stats (if enabled), and use repo metadata (topics, homepage, created/last push dates) to auto-fill dates and details.
+
+5. **Environment variables (.env.local)**
+
+   Create a `.env.local` file in the project root to enable contact notifications and the resume viewer. Only set the ones you plan to use:
+
+   ```bash
+   DISCORD_CONTACT_WEBHOOK_URL=https://discord.com/api/webhooks/your_webhook_id/your_webhook_token
+
+   RESUME_GOOGLE_DOC_ID=your_google_doc_id_here
+
+   RESEND_API_KEY=your_resend_api_key_here
+   CONTACT_TO_EMAIL=your_destination_email_here
+   CONTACT_FROM_EMAIL=your_verified_from_email_here
+
+   TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+   TELEGRAM_CHAT_ID=your_telegram_chat_id_here
+
+   # Optional: higher GitHub API rate limits for stats
+   # GITHUB_TOKEN=your_github_personal_access_token_here
+   ```
+
+6. **Run locally**
+
+   ```bash
+   npm run dev
+   ```
+
+   Then visit `http://localhost:3000` to preview your portfolio.
+
+---
+
+## 🚀 Deployment
+
+DevfolioX is a standard Next.js app and can run anywhere that supports Node and Next.js.
+
+- **Local production build**
+
+  ```bash
+  npm run build
+  ```
+
+  ```bash
+  npm start
+  ```
+
+  App runs in production mode, usually on `http://localhost:3000`
 
 <details>
   <summary><strong>How to host DevfolioX for free (Vercel / Netlify)</strong></summary>
 
   <br />
 
-  ### 🚀 Deploy to Vercel (free)
+### 🚀 Deploy to Vercel (free)
 
-  1. Push your code to GitHub (or GitLab/Bitbucket).  
-  2. Go to Vercel and click **“New Project” → “Import”**.  
-  3. Select your `devfoliox` repo; Vercel will auto-detect it as a Next.js app.  
-  4. Set the same environment variables from `.env.local` in the Vercel project settings.  
-  5. Deploy with the default Next.js settings.
+1. Push your code to GitHub (or GitLab/Bitbucket).
+2. Go to Vercel and click **“New Project” → “Import”**.
+3. Select your `devfoliox` repo; Vercel will auto-detect it as a Next.js app.
+4. Set the same environment variables from `.env.local` in the Vercel project settings.
+5. Deploy with the default Next.js settings.
 
-  Vercel will handle:
+Vercel will handle:
 
-  - Static assets and server-side rendering  
-  - API routes (contact form, resume export)  
-  - Automatic redeploys when you push to your main branch  
+- Static assets and server-side rendering
+- API routes (contact form, resume export)
+- Automatic redeploys when you push to your main branch
 
-  ---
+---
 
-  ### 🌐 Deploy to Netlify (free)
+### 🌐 Deploy to Netlify (free)
 
-  1. Push your code to GitHub (or another supported Git provider).  
-  2. In Netlify, click **“Add new site” → “Import an existing project”** and choose your repo.  
-  3. Use a standard Next.js build command:
+1. Push your code to GitHub (or another supported Git provider).
+2. In Netlify, click **“Add new site” → “Import an existing project”** and choose your repo.
+3. Use a standard Next.js build command:
 
-     ```bash
-     npm run build
-     ```
+   ```bash
+   npm run build
+   ```
 
-  4. Set your environment variables in the Netlify site settings.  
-  5. Deploy. Netlify will serve the static output and run any serverless functions created by your Next.js config.
+4. Set your environment variables in the Netlify site settings.
+5. Deploy. Netlify will serve the static output and run any serverless functions created by your Next.js config.
 
 </details>
