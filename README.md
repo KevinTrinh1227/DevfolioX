@@ -26,7 +26,7 @@
   "stats_downloads": true,
   "links": [
     {
-      "label": "Live Demo",
+      "label": "Demo",
       "href": "https://devfoliox.vercel.app",
       "type": "live"
     },
@@ -36,7 +36,7 @@
       "type": "github"
     },
     {
-      "label": "Download ZIP",
+      "label": "Download",
       "href": "https://github.com/KevinTrinh1227/DevfolioX/archive/refs/heads/main.zip",
       "type": "download"
     }
