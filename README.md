@@ -30,7 +30,7 @@
 -->
 <div align="center">
 
-# ✨ DevfolioX
+# ✨ DevfolioX ✨
 
 A minimal, user-friendly, responsive dev/personal portfolio template that integrates with numerous platforms and offers genuinely useful functionality. Built with **Next.js** and **Tailwind CSS** — minimal UI, easy setup, and plenty of power under the hood.
 
@@ -39,13 +39,10 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 [![Forks](https://img.shields.io/github/forks/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 [![Latest Release](https://img.shields.io/github/v/release/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 
-<a href="https://kevintrinh.dev" target="_blank">
-  <img
+<img
     alt="Screen Shot from 10-03-2023 of landing page."
     width="850px"
-    src="https://github.com/KevinTrinh1227/DevfolioX/blob/main/public/images/devfoliox_demo_1.gif"
-  >
-</a>
+    src="https://github.com/KevinTrinh1227/DevfolioX/blob/main/public/images/devfoliox_demo_1.gif">
 
 <details>
   <summary>View more screenshots</summary>
@@ -63,7 +60,7 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 <p align="center"><strong>Table of Contents</strong></p>
 <p align="center">
   <a href="#-about">About</a> •
-  <a href="#-features--integrations">Features &amp; Integrations</a> •
+  <a href="#-features--integrations">Features</a> •
   <a href="#-core-sections">Core Sections</a> •
   <a href="#-configuration--setup">Configuration &amp; Setup</a> •
   <a href="#-deployment">Deployment</a>
