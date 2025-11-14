@@ -57,17 +57,24 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 
 <img
     alt="Screen Shot from 10-03-2023 of landing page."
-    width="850px"
+    width="750px"
     src="https://github.com/KevinTrinh1227/DevfolioX/blob/main/public/images/devfoliox_demo_1.gif">
 
 <details>
   <summary>View more screenshots</summary>
+  <br>
   <p align="center">
-    <img src="https://placehold.co/600x400" alt="DevfolioX screenshot 2" /><br/>
-    <img src="https://placehold.co/600x400" alt="DevfolioX screenshot 3" /><br/>
-    <img src="https://placehold.co/600x400" alt="DevfolioX screenshot 4" />
+    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
+    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_2.png" alt="DevfolioX screenshot 2" />
+    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_3.png" alt="DevfolioX screenshot 3" />
+    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_4.png" alt="DevfolioX screenshot 4" />
+    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_5.png" alt="DevfolioX screenshot 5" />
+    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_6.png" alt="DevfolioX screenshot 6" />
+    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_7.png" alt="DevfolioX screenshot 7" />
+    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_8.png" alt="DevfolioX screenshot 8" />
   </p>
 </details>
+
 
 </div>
 
