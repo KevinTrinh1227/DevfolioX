@@ -118,7 +118,14 @@
         "show": true,
         "isButton": false
       },
-      { "id": "resume", "label": "My Resume", "show": true, "isButton": true }
+      {
+        "id": "resume",
+        "label": "My Resume",
+        "href": "/resume",
+        "show": true,
+        "isButton": true,
+        "external": true
+      }
     ]
   },
 

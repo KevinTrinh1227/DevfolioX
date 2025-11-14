@@ -18,22 +18,17 @@ export default function Page() {
     <main className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      {/* Components that (directly or via hooks) use useSearchParams must be wrapped in Suspense */}
+      {/* Any section that (directly or via hooks) uses useSearchParams/usePathname/useRouter
+          should live inside a Suspense boundary. */}
       <Suspense fallback={null}>
         <HeroSection />
-      </Suspense>
-
-      <Suspense fallback={null}>
         <AboutSection />
-      </Suspense>
-
-      <Suspense fallback={null}>
         <ExperienceSection />
+        <ProjectsSection />
       </Suspense>
 
-      {/* Other sections can render normally */}
+      {/* These sections don't use URL hooks, so they can render normally */}
       <EducationSection />
-      <ProjectsSection />
       <BlogSection />
       <YouTubeSection />
       <CertificationsSection />

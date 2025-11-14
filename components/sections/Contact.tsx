@@ -408,7 +408,7 @@ export function ContactSection() {
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="inline-flex items-center gap-1.5 rounded-md bg-accent px-4 py-2 text-xs font-medium text-white transition hover:bg-accent/90 disabled:opacity-70 sm:text-sm"
+                  className="inline-flex items-center gap-1.5 rounded-md border border-transparent bg-accent px-4 py-2 text-xs font-medium text-white shadow-sm transition-transform transition-colors duration-200 hover:border-accent hover:bg-accent/90 hover:shadow-md hover:-translate-y-0.5 disabled:opacity-70 sm:text-sm"
                 >
                   <Send className="h-4 w-4" />
                   {status === "submitting"

@@ -79,8 +79,9 @@ export function ExperienceSection() {
 
   const btnBase =
     "inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-xs sm:text-sm font-medium transition border border-white/15 text-white/90 hover:text-white hover:border-accent hover:bg-white/5";
+
   const btnAccent =
-    "inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-xs sm:text-sm font-medium transition bg-accent text-white hover:bg-accent/90";
+    "inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-xs sm:text-sm font-medium border border-transparent bg-accent text-white shadow-sm transition-transform transition-colors duration-200 hover:border-accent hover:bg-accent/90 hover:shadow-md hover:-translate-y-0.5";
 
   const modalTitle = lastUpdatedText
     ? `My Resume (Updated ${lastUpdatedText})`

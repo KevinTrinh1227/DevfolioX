@@ -31,9 +31,30 @@ export type ProjectItem = {
   links?: ProjectLink[];
   featured?: boolean;
 
+  // Static shields / badges to show in the popup
+  badges?: string[];
+
+  // For AUTO date behavior (in UI layer)
+  autoInactiveThresholdDays?: number;
+
+  // GitHub stats
   githubStars?: number;
   githubForks?: number;
+  // For our new system: downloads for the latest release (if stats_downloads is true)
   downloads?: number;
+
+  // Extra GitHub repo metadata (for modal)
+  repoDescription?: string;
+  repoHomepage?: string;
+  repoTopics?: string[];
+  repoLicense?: string;
+  repoCreatedAt?: string;
+  repoPushedAt?: string;
+
+  // Latest release metadata (optional, only when stats_downloads is true)
+  githubLatestReleaseTag?: string;
+  githubLatestReleaseName?: string;
+  githubLatestReleasePublishedAt?: string;
 
   // Cached README (client never fetches; rendered in modal only if present)
   readmePlainExcerpt?: string;
@@ -86,6 +107,7 @@ function mdToSafeHtml(md: string): string {
       "pre",
       "code",
       "table",
+      "div",
       "thead",
       "tbody",
       "tr",
@@ -147,6 +169,8 @@ function extractMetaFromReadme(readme: string) {
       stats_stars?: boolean;
       stats_forks?: boolean;
       stats_downloads?: boolean;
+      badges?: string[];
+      auto_inactive_threshold_days?: number;
     };
     return meta;
   } catch {
@@ -217,55 +241,132 @@ async function fetchGithubStats(
     stats_downloads?: boolean;
   },
   revalidateSeconds: number
-): Promise<{ stars?: number; forks?: number; downloads?: number }> {
+): Promise<{
+  stars?: number;
+  forks?: number;
+  downloads?: number;
+  repoDescription?: string;
+  repoHomepage?: string;
+  repoTopics?: string[];
+  license?: string;
+  createdAt?: string;
+  pushedAt?: string;
+  latestReleaseTag?: string;
+  latestReleaseName?: string;
+  latestReleasePublishedAt?: string;
+}> {
   const wantStars = !!opts.stats_stars;
   const wantForks = !!opts.stats_forks;
   const wantDownloads = !!opts.stats_downloads;
-
-  if (!wantStars && !wantForks && !wantDownloads) return {};
 
   let stars: number | undefined;
   let forks: number | undefined;
   let downloads: number | undefined;
 
+  let repoDescription: string | undefined;
+  let repoHomepage: string | undefined;
+  let repoTopics: string[] | undefined;
+  let license: string | undefined;
+  let createdAt: string | undefined;
+  let pushedAt: string | undefined;
+  let latestReleaseTag: string | undefined;
+  let latestReleaseName: string | undefined;
+  let latestReleasePublishedAt: string | undefined;
+
   const [repoJson, releasesJson] = await Promise.all([
-    wantStars || wantForks
-      ? fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-          headers: githubHeaders(),
-          next: { revalidate: revalidateSeconds },
-        })
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null)
-      : Promise.resolve(null),
+    fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+      headers: githubHeaders(),
+      next: { revalidate: revalidateSeconds },
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .catch(() => null),
     wantDownloads
-      ? fetch(`https://api.github.com/repos/${owner}/${repo}/releases`, {
-          headers: githubHeaders(),
-          next: { revalidate: revalidateSeconds },
-        })
+      ? fetch(
+          `https://api.github.com/repos/${owner}/${repo}/releases?per_page=1`,
+          {
+            headers: githubHeaders(),
+            next: { revalidate: revalidateSeconds },
+          }
+        )
           .then((r) => (r.ok ? r.json() : null))
           .catch(() => null)
       : Promise.resolve(null),
   ]);
 
-  if (repoJson && (wantStars || wantForks)) {
-    const s = Number(repoJson.stargazers_count);
-    const f = Number(repoJson.forks_count);
-    if (wantStars && Number.isFinite(s)) stars = s;
-    if (wantForks && Number.isFinite(f)) forks = f;
+  if (repoJson) {
+    // core stats
+    if (wantStars && Number.isFinite(Number(repoJson.stargazers_count))) {
+      stars = Number(repoJson.stargazers_count);
+    }
+    if (wantForks && Number.isFinite(Number(repoJson.forks_count))) {
+      forks = Number(repoJson.forks_count);
+    }
+
+    // extra repo metadata
+    if (typeof repoJson.description === "string" && repoJson.description) {
+      repoDescription = repoJson.description;
+    }
+
+    if (typeof repoJson.homepage === "string" && repoJson.homepage) {
+      repoHomepage = repoJson.homepage;
+    }
+
+    if (Array.isArray(repoJson.topics) && repoJson.topics.length > 0) {
+      repoTopics = repoJson.topics.map((t: unknown) => String(t));
+    }
+
+    if (repoJson.license) {
+      const lic = repoJson.license as {
+        spdx_id?: string;
+        key?: string;
+        name?: string;
+      };
+      license = lic.spdx_id || lic.key || lic.name;
+    }
+
+    if (typeof repoJson.created_at === "string") {
+      createdAt = repoJson.created_at;
+    }
+    if (typeof repoJson.pushed_at === "string") {
+      pushedAt = repoJson.pushed_at;
+    }
   }
 
-  if (Array.isArray(releasesJson) && wantDownloads) {
-    downloads = releasesJson.reduce((sum: number, rel: any) => {
-      const assets = Array.isArray(rel?.assets) ? rel.assets : [];
-      const c = assets.reduce(
-        (acc: number, a: any) => acc + (Number(a?.download_count) || 0),
-        0
-      );
-      return sum + c;
-    }, 0);
+  if (Array.isArray(releasesJson) && releasesJson.length > 0 && wantDownloads) {
+    const rel = releasesJson[0];
+    const assets = Array.isArray(rel?.assets) ? rel.assets : [];
+    downloads = assets.reduce(
+      (sum: number, a: any) => sum + (Number(a?.download_count) || 0),
+      0
+    );
+
+    if (typeof rel.tag_name === "string") {
+      latestReleaseTag = rel.tag_name;
+    }
+    if (typeof rel.name === "string" && rel.name) {
+      latestReleaseName = rel.name;
+    } else if (latestReleaseTag) {
+      latestReleaseName = latestReleaseTag;
+    }
+    if (typeof rel.published_at === "string") {
+      latestReleasePublishedAt = rel.published_at;
+    }
   }
 
-  return { stars, forks, downloads };
+  return {
+    stars,
+    forks,
+    downloads,
+    repoDescription,
+    repoHomepage,
+    repoTopics,
+    license,
+    createdAt,
+    pushedAt,
+    latestReleaseTag,
+    latestReleaseName,
+    latestReleasePublishedAt,
+  };
 }
 
 function sortByPriority<T extends { _priority?: number }>(items: T[]) {
@@ -296,6 +397,7 @@ export async function loadProjects(): Promise<ProjectItem[]> {
             summary: "GitHub project",
             start: "",
             end: "",
+            githubRepoUrl: entry.repo_url,
             _priority: entry.priority ?? idx + 1,
           } as ProjectItem & { _priority?: number };
         }
@@ -314,6 +416,16 @@ export async function loadProjects(): Promise<ProjectItem[]> {
         let forks: number | undefined;
         let downloads: number | undefined;
 
+        let repoDescription: string | undefined;
+        let repoHomepage: string | undefined;
+        let repoTopics: string[] | undefined;
+        let repoLicense: string | undefined;
+        let repoCreatedAt: string | undefined;
+        let repoPushedAt: string | undefined;
+        let latestReleaseTag: string | undefined;
+        let latestReleaseName: string | undefined;
+        let latestReleasePublishedAt: string | undefined;
+
         if (meta) {
           const statResult = await fetchGithubStats(
             owner,
@@ -328,6 +440,16 @@ export async function loadProjects(): Promise<ProjectItem[]> {
           stars = statResult.stars;
           forks = statResult.forks;
           downloads = statResult.downloads;
+
+          repoDescription = statResult.repoDescription;
+          repoHomepage = statResult.repoHomepage;
+          repoTopics = statResult.repoTopics;
+          repoLicense = statResult.license;
+          repoCreatedAt = statResult.createdAt;
+          repoPushedAt = statResult.pushedAt;
+          latestReleaseTag = statResult.latestReleaseTag;
+          latestReleaseName = statResult.latestReleaseName;
+          latestReleasePublishedAt = statResult.latestReleasePublishedAt;
         }
 
         return {
@@ -340,6 +462,9 @@ export async function loadProjects(): Promise<ProjectItem[]> {
           technologies: meta?.technologies,
           links: meta?.links,
           featured: meta?.featured,
+
+          badges: meta?.badges,
+          autoInactiveThresholdDays: meta?.auto_inactive_threshold_days,
 
           githubStars:
             stars ??
@@ -360,6 +485,18 @@ export async function loadProjects(): Promise<ProjectItem[]> {
               ? meta.downloads
               : undefined),
 
+          repoDescription,
+          repoHomepage,
+          repoTopics,
+          repoLicense,
+          repoCreatedAt,
+          repoPushedAt,
+          githubLatestReleaseTag: latestReleaseTag,
+          githubLatestReleaseName: latestReleaseName,
+          githubLatestReleasePublishedAt: latestReleasePublishedAt,
+
+          githubRepoUrl: entry.repo_url,
+
           // cached README (plain + HTML)
           readmePlainExcerpt: plainExcerpt,
           readmePlainFull: plainFull,
@@ -376,7 +513,7 @@ export async function loadProjects(): Promise<ProjectItem[]> {
           summary: "Project",
           start: "",
           end: "",
-
+          githubRepoUrl: entry.repo_url,
           _priority: entry.priority ?? idx + 1,
         } as ProjectItem & { _priority?: number };
       }
@@ -390,55 +527,79 @@ export async function loadProjects(): Promise<ProjectItem[]> {
       let forks: number | undefined;
       let downloads: number | undefined;
 
+      let repoDescription: string | undefined = p.repoDescription;
+      let repoHomepage: string | undefined = p.repoHomepage;
+      let repoTopics: string[] | undefined = p.repoTopics;
+      let repoLicense: string | undefined = p.repoLicense;
+      let repoCreatedAt: string | undefined = p.repoCreatedAt;
+      let repoPushedAt: string | undefined = p.repoPushedAt;
+      let latestReleaseTag: string | undefined = p.githubLatestReleaseTag;
+      let latestReleaseName: string | undefined = p.githubLatestReleaseName;
+      let latestReleasePublishedAt: string | undefined =
+        p.githubLatestReleasePublishedAt;
+
       // Defaults (so we can merge with any pre-filled values on p)
-      let plainExcerpt: string | undefined;
-      let plainFull: string | undefined;
-      let htmlExcerpt: string | undefined;
-      let htmlFull: string | undefined;
+      let plainExcerpt: string | undefined = p.readmePlainExcerpt;
+      let plainFull: string | undefined = p.readmePlainFull;
+      let htmlExcerpt: string | undefined = p.readmeHtmlExcerpt;
+      let htmlFull: string | undefined = p.readmeHtmlFull;
 
       if (p.githubRepoUrl) {
         try {
           const { owner, repo } = parseOwnerRepo(p.githubRepoUrl);
 
-          // stats if requested
-          if (p.stats) {
-            const statResult = await fetchGithubStats(
-              owner,
-              repo,
-              {
-                stats_stars: !!p.stats.stars,
-                stats_forks: !!p.stats.forks,
-                stats_downloads: !!p.stats.downloads,
-              },
-              revalidateSeconds
-            );
-            stars = statResult.stars;
-            forks = statResult.forks;
-            downloads = statResult.downloads;
-          }
+          // Always fetch repo metadata; flags only control stats & releases
+          const statResult = await fetchGithubStats(
+            owner,
+            repo,
+            {
+              stats_stars: !!p.stats?.stars,
+              stats_forks: !!p.stats?.forks,
+              stats_downloads: !!p.stats?.downloads,
+            },
+            revalidateSeconds
+          );
+          stars = statResult.stars;
+          forks = statResult.forks;
+          downloads = statResult.downloads;
+
+          repoDescription = repoDescription ?? statResult.repoDescription;
+          repoHomepage = repoHomepage ?? statResult.repoHomepage;
+          repoTopics = repoTopics ?? statResult.repoTopics;
+          repoLicense = repoLicense ?? statResult.license;
+          repoCreatedAt = repoCreatedAt ?? statResult.createdAt;
+          repoPushedAt = repoPushedAt ?? statResult.pushedAt;
+          latestReleaseTag = latestReleaseTag ?? statResult.latestReleaseTag;
+          latestReleaseName = latestReleaseName ?? statResult.latestReleaseName;
+          latestReleasePublishedAt =
+            latestReleasePublishedAt ?? statResult.latestReleasePublishedAt;
 
           // README cache (optional)
-          const readmeRes = await fetch(
-            `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/README.md`,
-            {
-              headers: githubHeaders(),
-              next: { revalidate: revalidateSeconds },
+          if (!plainExcerpt || !htmlExcerpt) {
+            const readmeRes = await fetch(
+              `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/README.md`,
+              {
+                headers: githubHeaders(),
+                next: { revalidate: revalidateSeconds },
+              }
+            ).catch(() => null);
+
+            if (readmeRes && readmeRes.ok) {
+              const md = await readmeRes.text();
+              const clipped =
+                md.length > MAX_README_BYTES
+                  ? md.slice(0, MAX_README_BYTES)
+                  : md;
+
+              const sliced = sliceReadmeWithBase(clipped, owner, repo);
+              plainExcerpt = plainExcerpt ?? sliced.plainExcerpt;
+              plainFull = plainFull ?? sliced.plainFull;
+              htmlExcerpt = htmlExcerpt ?? sliced.htmlExcerpt;
+              htmlFull = htmlFull ?? sliced.htmlFull;
             }
-          ).catch(() => null);
-
-          if (readmeRes && readmeRes.ok) {
-            const md = await readmeRes.text();
-            const clipped =
-              md.length > MAX_README_BYTES ? md.slice(0, MAX_README_BYTES) : md;
-
-            const sliced = sliceReadmeWithBase(clipped, owner, repo);
-            plainExcerpt = sliced.plainExcerpt;
-            plainFull = sliced.plainFull;
-            htmlExcerpt = sliced.htmlExcerpt;
-            htmlFull = sliced.htmlFull;
           }
         } catch {
-          // ignore errors for locals
+          // ignore errors for locals; keep whatever was in p
         }
       }
 
@@ -460,11 +621,21 @@ export async function loadProjects(): Promise<ProjectItem[]> {
             ? p.downloads
             : undefined),
 
+        repoDescription,
+        repoHomepage,
+        repoTopics,
+        repoLicense,
+        repoCreatedAt,
+        repoPushedAt,
+        githubLatestReleaseTag: latestReleaseTag,
+        githubLatestReleaseName: latestReleaseName,
+        githubLatestReleasePublishedAt: latestReleasePublishedAt,
+
         // merge any pre-filled values with what we sliced
-        readmePlainExcerpt: p.readmePlainExcerpt ?? plainExcerpt,
-        readmePlainFull: p.readmePlainFull ?? plainFull,
-        readmeHtmlExcerpt: p.readmeHtmlExcerpt ?? htmlExcerpt,
-        readmeHtmlFull: p.readmeHtmlFull ?? htmlFull,
+        readmePlainExcerpt: plainExcerpt,
+        readmePlainFull: plainFull,
+        readmeHtmlExcerpt: htmlExcerpt,
+        readmeHtmlFull: htmlFull,
 
         _priority: p.priority ?? 500 + idx,
       };
