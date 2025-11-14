@@ -58,7 +58,7 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
 
 <details>
-  <summary>View more screenshots</summary>
+  <summary><strong>VIEW MORE PHOTOS HERE</strong></summary>
   <br>
   <p align="center">
     <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_2.png" alt="DevfolioX screenshot 2" />
