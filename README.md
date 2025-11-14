@@ -57,7 +57,6 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 
 <img
     alt="Screen Shot from 10-03-2023 of landing page."
-    width="750px"
     src="https://github.com/KevinTrinh1227/DevfolioX/blob/main/public/images/devfoliox_demo_1.gif">
 
 <details>
