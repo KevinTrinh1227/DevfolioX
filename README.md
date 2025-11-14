@@ -47,7 +47,7 @@
 
 # 👨‍💻 DevfolioX
 
-A minimal, user-friendly, responsive dev/personal portfolio template that integrates with numerous platforms and offers tons of useful functionality. Built with **Next.js** and **Tailwind CSS**.
+A minimal, user-friendly, responsive dev/personal portfolio template that integrates with numerous platforms and offers tons of useful functionality. Minimal, powerful, and professional, all on a single page. Built with **Next.js** and **Tailwind CSS**.
 
 <!--
 [![Downloads](https://img.shields.io/github/downloads/KevinTrinh1227/devfoliox/total?style=for-the-badge&logo=github)](#)
@@ -55,23 +55,37 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 [![Forks](https://img.shields.io/github/forks/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 [![Latest Release](https://img.shields.io/github/v/release/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#) -->
 
-<img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
+<strong>Live Demo: <a href="devfoliox.vercel.app">devfoliox.vercel.app</a></strong>
 
+<a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
+  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
+</a>
 <details>
   <summary><strong>VIEW MORE PHOTOS HERE</strong></summary>
-  <br>
   <p align="center">
-    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_2.png" alt="DevfolioX screenshot 2" />
-    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_3.png" alt="DevfolioX screenshot 3" />
-    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_4.png" alt="DevfolioX screenshot 4" />
-    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_5.png" alt="DevfolioX screenshot 5" />
-    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_6.png" alt="DevfolioX screenshot 6" />
-    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_7.png" alt="DevfolioX screenshot 7" />
-    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_8.png" alt="DevfolioX screenshot 8" />
+    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
+      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_2.png" alt="DevfolioX screenshot 2" />
+    </a>
+    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
+      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_3.png" alt="DevfolioX screenshot 3" />
+    </a>
+    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
+      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_4.png" alt="DevfolioX screenshot 4" />
+    </a>
+    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
+      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_5.png" alt="DevfolioX screenshot 5" />
+    </a>
+    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
+      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_6.png" alt="DevfolioX screenshot 6" />
+    </a>
+    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
+      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_7.png" alt="DevfolioX screenshot 7" />
+    </a>
+    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
+      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_8.png" alt="DevfolioX screenshot 8" />
+    </a>
   </p>
 </details>
-
-
 </div>
 
 ---
@@ -89,9 +103,20 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 
 ## 🌐 About DevFolioX
 
-**DevfolioX** is a minimal, config-driven portfolio template built for developers and students who want a clean, professional online presence without a lot of overhead. It centralizes your projects, experience, writing, videos, resume/CV, and contact into a single responsive page.
+**DevfolioX** is a minimal, config-driven portfolio template built for developers and students who want a clean, professional online presence without a lot of overhead. It centralizes your projects, experience, writing, videos, resume/CV, and contact information into a single responsive page.
 
 The template is powered by a few small TypeScript config files, so most updates are made by editing data rather than UI code. It uses **Next.js (App Router)**, **React**, and **Tailwind CSS**, and is designed to be deployed on **Vercel** or **Netlify** as a simple, fully static site for this initial release.
+
+<details>
+  <summary><strong>Why I designed DevfolioX with a “less is more” mindset</strong></summary>
+
+  I try to keep both my resume and this site focused and easy to scan. A J.P. Morgan recruiter once told me they often spend around **7 seconds** on a resume before deciding whether to keep reading. That stuck with me.
+
+  If you overload a page with text, sections, and visual noise, the most important details (your impact, projects, and skills) become a **needle in a haystack**. By keeping things clean, intentional, and well-structured, I make it easier for recruiters, hiring managers, and collaborators to quickly find what actually matters.
+
+  DevfolioX follows that same principle: fewer distractions, clearer hierarchy, and just enough detail to invite a deeper look if someone wants it.
+</details>
+
 
 ---
 
@@ -142,8 +167,9 @@ DevfolioX is **config-driven**. Most customization is done by editing small conf
 
 1. **Download DevFolioX**
 
-   - [Download latest stable release](https://github.com/YOUR_GITHUB_USERNAME/devfoliox/releases/latest) (recommended)
-   - Or Clone the repository
+   - [Download latest stable release](https://github.com/KevinTrinh1227/devfoliox/releases/latest) (recommended)
+   - [Download latest dev release](https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip) (latest untested features)
+   - Or Clone the repository (Same as dev release)
 
      ```bash
      git clone https://github.com/KevinTrinh1227/DevfolioX
@@ -159,26 +185,9 @@ DevfolioX is **config-driven**. Most customization is done by editing small conf
 
 2. **Set up core site config**
 
-   Update the main site config (for example `config/siteConfig.ts`) with:
+   Update the JSON files inside `./config/*.json` to meet your needs.
 
-   - Your name, tagline, and location
-   - Social links (GitHub, LinkedIn, email, etc.)
-   - Which sections are enabled/disabled
-   - Theme options (if any)
-   - Resume/CV viewer settings
-
-3. **Fill out structured data**
-
-   Edit the config files for your content (file names may vary slightly):
-
-   - `config/education` – degrees, schools, dates
-   - `config/experience` – roles, companies, bullet points
-   - `config/certifications` / `config/achievements` – awards, certs, competitions
-   - `config/research` – research/projects/talks (optional)
-   - `config/openSource` – open source contributions (optional)
-   - `config/projects.json` – local projects and any GitHub-backed project overrides
-
-4. **Configure projects**
+3. **Configure projects**
 
    For GitHub-backed projects, you can use a hidden block in each repo’s README:
 
@@ -210,31 +219,13 @@ DevfolioX is **config-driven**. Most customization is done by editing small conf
 
 5. **Environment variables (.env.local)**
 
-   Create a `.env.local` file in the project root to enable contact notifications and the resume viewer. Only set the ones you plan to use:
+   Create a `.env.local` file in dir. Only set the ones you plan to use, visit the [.env.example](https://github.com/KevinTrinh1227/DevfolioX/blob/main/.env.example) for example.
 
-   ```bash
-   DISCORD_CONTACT_WEBHOOK_URL=https://discord.com/api/webhooks/your_webhook_id/your_webhook_token
-
-   RESUME_GOOGLE_DOC_ID=your_google_doc_id_here
-
-   RESEND_API_KEY=your_resend_api_key_here
-   CONTACT_TO_EMAIL=your_destination_email_here
-   CONTACT_FROM_EMAIL=your_verified_from_email_here
-
-   TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
-   TELEGRAM_CHAT_ID=your_telegram_chat_id_here
-
-   # Optional: higher GitHub API rate limits for stats
-   # GITHUB_TOKEN=your_github_personal_access_token_here
-   ```
-
-6. **Run locally**
+6. **Run locally then visit `http://localhost:3000` or given link**
 
    ```bash
    npm run dev
    ```
-
-   Then visit `http://localhost:3000` to preview your portfolio.
 
 ---
 
@@ -251,8 +242,6 @@ DevfolioX is a standard Next.js app and can run anywhere that supports Node and 
   ```bash
   npm start
   ```
-
-  App runs in production mode, usually on `http://localhost:3000`
 
 <details>
   <summary><strong>How to host DevfolioX for free (Vercel / Netlify)</strong></summary>
