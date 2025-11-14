@@ -55,15 +55,12 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 [![Forks](https://img.shields.io/github/forks/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 [![Latest Release](https://img.shields.io/github/v/release/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#) -->
 
-<img
-    alt="Screen Shot from 10-03-2023 of landing page."
-    src="https://github.com/KevinTrinh1227/DevfolioX/blob/main/public/images/devfoliox_demo_1.gif">
+<img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
 
 <details>
   <summary>View more screenshots</summary>
   <br>
   <p align="center">
-    <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
     <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_2.png" alt="DevfolioX screenshot 2" />
     <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_3.png" alt="DevfolioX screenshot 3" />
     <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_4.png" alt="DevfolioX screenshot 4" />
