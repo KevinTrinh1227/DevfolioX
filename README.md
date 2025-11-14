@@ -55,7 +55,7 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 [![Forks](https://img.shields.io/github/forks/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 [![Latest Release](https://img.shields.io/github/v/release/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#) -->
 
-<strong>Live Demo: <a href="devfoliox.vercel.app">devfoliox.vercel.app</a></strong>
+<strong>Live Demo: <a href="https://devfoliox.vercel.app">devfoliox.vercel.app</a></strong>
 
 <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
   <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
