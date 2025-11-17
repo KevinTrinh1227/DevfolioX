@@ -37,7 +37,7 @@
     },
     {
       "label": "Download",
-      "href": "https://github.com/KevinTrinh1227/DevfolioX/archive/refs/heads/main.zip",
+      "href": "https://devfoliox.vercel.app/d/KevinTrinh1227/DevfolioX/",
       "type": "download"
     }
   ]
