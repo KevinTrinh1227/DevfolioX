@@ -386,9 +386,9 @@ function ProjectDetails({
   );
   const latestReleaseUrl =
     normalizedRepoUrl && latestReleaseTag
-      ? `${normalizedRepoUrl}/releases/tag/${encodeURIComponent(
+      ? `${normalizedRepoUrl}/archive/refs/tags/${encodeURIComponent(
           latestReleaseTag
-        )}`
+        )}.zip`
       : undefined;
 
   const latestReleaseButtonText = useMemo(() => {

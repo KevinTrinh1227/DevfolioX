@@ -55,35 +55,19 @@ A minimal, user-friendly, responsive dev/personal portfolio template that integr
 [![Forks](https://img.shields.io/github/forks/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#)
 [![Latest Release](https://img.shields.io/github/v/release/KevinTrinh1227/devfoliox?style=for-the-badge&logo=github)](#) -->
 
-<strong>Live Demo: <a href="https://devfoliox.vercel.app">devfoliox.vercel.app</a></strong>
+<strong>Live Demo: <a target="_blank" href="https://devfoliox.vercel.app">devfoliox.vercel.app</a></strong>
+<img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
 
-<a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
-  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_1.png" alt="DevfolioX screenshot 1" />
-</a>
 <details>
-  <summary><strong>VIEW MORE PHOTOS HERE</strong></summary>
+  <summary><strong>VIEW MORE SCREEN SHOTS HERE</strong></summary>
   <p align="center">
-    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
-      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_2.png" alt="DevfolioX screenshot 2" />
-    </a>
-    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
-      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_3.png" alt="DevfolioX screenshot 3" />
-    </a>
-    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
-      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_4.png" alt="DevfolioX screenshot 4" />
-    </a>
-    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
-      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_5.png" alt="DevfolioX screenshot 5" />
-    </a>
-    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
-      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_6.png" alt="DevfolioX screenshot 6" />
-    </a>
-    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
-      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_7.png" alt="DevfolioX screenshot 7" />
-    </a>
-    <a href="https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip">
-      <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_8.png" alt="DevfolioX screenshot 8" />
-    </a>
+  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_2.png" alt="DevfolioX screenshot 2" />
+  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_3.png" alt="DevfolioX screenshot 3" />
+  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_4.png" alt="DevfolioX screenshot 4" />
+  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_5.png" alt="DevfolioX screenshot 5" />
+  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_6.png" alt="DevfolioX screenshot 6" />
+  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_7.png" alt="DevfolioX screenshot 7" />
+  <img src="https://raw.githubusercontent.com/KevinTrinh1227/devfoliox/main/public/images/demo_8.png" alt="DevfolioX screenshot 8" />
   </p>
 </details>
 </div>
@@ -110,13 +94,13 @@ The template is powered by a few small TypeScript config files, so most updates 
 <details>
   <summary><strong>Why I designed DevfolioX with a “less is more” mindset</strong></summary>
 
-  I try to keep both my resume and this site focused and easy to scan. A J.P. Morgan recruiter once told me they often spend around **7 seconds** on a resume before deciding whether to keep reading. That stuck with me.
+I try to keep both my resume and this site focused and easy to scan. A J.P. Morgan recruiter once told me they often spend around **7 seconds** on a resume before deciding whether to keep reading. That stuck with me.
 
-  If you overload a page with text, sections, and visual noise, the most important details (your impact, projects, and skills) become a **needle in a haystack**. By keeping things clean, intentional, and well-structured, I make it easier for recruiters, hiring managers, and collaborators to quickly find what actually matters.
+If you overload a page with text, sections, and visual noise, the most important details (your impact, projects, and skills) become a **needle in a haystack**. By keeping things clean, intentional, and well-structured, I make it easier for recruiters, hiring managers, and collaborators to quickly find what actually matters.
 
-  DevfolioX follows that same principle: fewer distractions, clearer hierarchy, and just enough detail to invite a deeper look if someone wants it.
+DevfolioX follows that same principle: fewer distractions, clearer hierarchy, and just enough detail to invite a deeper look if someone wants it.
+
 </details>
-
 
 ---
 
@@ -217,11 +201,11 @@ DevfolioX is **config-driven**. Most customization is done by editing small conf
 
    The app will read this at build time, pull GitHub stats (if enabled), and use repo metadata (topics, homepage, created/last push dates) to auto-fill dates and details.
 
-5. **Environment variables (.env.local)**
+4. **Environment variables (.env.local)**
 
    Create a `.env.local` file in dir. Only set the ones you plan to use, visit the [.env.example](https://github.com/KevinTrinh1227/DevfolioX/blob/main/.env.example) for example.
 
-6. **Run locally then visit `http://localhost:3000` or given link**
+5. **Run locally then visit `http://localhost:3000` or given link**
 
    ```bash
    npm run dev

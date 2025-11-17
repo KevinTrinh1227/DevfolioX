@@ -23,12 +23,12 @@ export default function Page() {
       <Suspense fallback={null}>
         <HeroSection />
         <AboutSection />
+        <EducationSection />
         <ExperienceSection />
         <ProjectsSection />
       </Suspense>
 
       {/* These sections don't use URL hooks, so they can render normally */}
-      <EducationSection />
       <BlogSection />
       <YouTubeSection />
       <CertificationsSection />
