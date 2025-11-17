@@ -114,7 +114,7 @@ DevfolioX follows that same principle: fewer distractions, clearer hierarchy, an
 - **Multi-channel contact** – A focused contact form that can notify you via email, Discord, and Telegram.
 - **Optional sponsor support** – Add a Sponsor button for GitHub Sponsors, Patreon, Ko-fi, etc.
 - **Free-hosting friendly** – Built to run entirely on Vercel or Netlify (including API routes) with no separate backend.
-- **And much more** - DevfolioX has dozens of features that tailor to everyone.
+- **And much more** - DevfolioX has dozens of features that tailors to everyone.
 
 **Integrations (all optional):**
 
