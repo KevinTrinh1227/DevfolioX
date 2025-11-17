@@ -72,7 +72,6 @@ export async function GET(
   }
 
   const { owner, repo: repoName } = parsed;
-  const fallbackZip = `https://github.com/${owner}/${repoName}/archive/refs/heads/main.zip`;
 
   try {
     const res = await fetch(
@@ -83,32 +82,46 @@ export async function GET(
       }
     );
 
+    // If there is no latest release at all, send them to the releases page
     if (!res.ok) {
-      return NextResponse.redirect(fallbackZip, 302);
+      return NextResponse.redirect(
+        `https://github.com/${owner}/${repoName}/releases`,
+        302
+      );
     }
 
     const data = (await res.json()) as any;
-    const tag = data.tag_name as string | undefined;
     const assets = (data.assets ?? []) as any[];
 
-    let downloadUrl: string | undefined;
+    // 1) Prefer a .zip asset if present
+    const zipAsset =
+      assets.find(
+        (a: any) =>
+          typeof a.browser_download_url === "string" &&
+          a.browser_download_url.toLowerCase().endsWith(".zip")
+      ) ??
+      // 2) Otherwise fall back to the first asset
+      assets[0];
 
-    // 1) Prefer real release asset
-    if (assets.length > 0 && assets[0].browser_download_url) {
-      downloadUrl = assets[0].browser_download_url as string;
-    }
-    // 2) Else use tag archive
-    else if (tag) {
-      downloadUrl = `https://github.com/${owner}/${repoName}/archive/refs/tags/${tag}.zip`;
-    }
-
-    // 3) Fallback: main branch zip
-    if (!downloadUrl) {
-      downloadUrl = fallbackZip;
+    // If there are no assets, DON'T fall back to tag/main zips,
+    // because those don't increment download stats.
+    // Just send the user to the release page so you can see it's misconfigured.
+    if (!zipAsset || !zipAsset.browser_download_url) {
+      return NextResponse.redirect(
+        `https://github.com/${owner}/${repoName}/releases/latest`,
+        302
+      );
     }
 
+    const downloadUrl = zipAsset.browser_download_url as string;
+
+    // This URL IS counted in GitHub's "Downloads" stats for that asset.
     return NextResponse.redirect(downloadUrl, 302);
   } catch {
-    return NextResponse.redirect(fallbackZip, 302);
+    // On network/API error, just send them to the repo's releases page
+    return NextResponse.redirect(
+      `https://github.com/${owner}/${repoName}/releases`,
+      302
+    );
   }
 }
