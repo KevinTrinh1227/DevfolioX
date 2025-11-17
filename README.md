@@ -151,7 +151,7 @@ DevfolioX is **config-driven**. Most customization is done by editing small conf
 
 1. **Download DevFolioX**
 
-   - [Download latest stable release](https://github.com/KevinTrinh1227/devfoliox/releases/latest) (recommended)
+   - [Download latest stable release](https://devfoliox.vercel.app/d/kevintrinh1227/devfoliox) (recommended)
    - [Download latest dev release](https://github.com/KevinTrinh1227/devfoliox/archive/refs/heads/main.zip) (latest untested features)
    - Or Clone the repository (Same as dev release)
 
