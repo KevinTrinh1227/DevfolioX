@@ -107,17 +107,18 @@ DevfolioX follows that same principle: fewer distractions, clearer hierarchy, an
 
 ## ✨ Features & Integrations
 
-- **Minimal one-page layout** – All key info (intro, projects, experience, contact) is visible with smooth scrolling and a clean navbar.
-- **Config-driven content** – Most text, links, and sections live in small JSON/TS config files, so you rarely need to touch UI code.
-- **Student & professional ready** – Handles education, experience, projects, research/publications, open source, and awards in a structured way.
-- **Inline resume viewer** – View and download a Google Docs–backed PDF directly on the site, with a visible “last updated” timestamp.
+- **Minimal one-page layout** – All key info visible with smooth scrolling and a clean navbar on one page.
+- **Config-driven content** – Most text, links, etc live in small JSON/TS config files, so you rarely need to touch UI code.
+- **Student & professional ready** – Handles education, experience, projects, open source, and more in a structured way.
+- **Resume viewer** – View and download a updated Google Docs–backed PDF directly on the site.
 - **Multi-channel contact** – A focused contact form that can notify you via email, Discord, and Telegram.
 - **Optional sponsor support** – Add a Sponsor button for GitHub Sponsors, Patreon, Ko-fi, etc.
 - **Free-hosting friendly** – Built to run entirely on Vercel or Netlify (including API routes) with no separate backend.
+- **And much more** - DevfolioX has dozens of features that tailor to everyone.
 
 **Integrations (all optional):**
 
-- **GitHub** – Drive project cards (and optional stats) from repositories and hidden `<!-- devfoliox {...} -->` metadata in each repo’s README.
+- **GitHub** – Display fully updated project details and info using GitHub.
 - **Dev.to / Medium** – Pull in recent posts so your writing section stays up-to-date automatically.
 - **YouTube** – Embed a featured video and/or a small list of recent uploads.
 - **Google Docs** – Use a single Google Doc as the source of truth for your resume/CV and export it as a PDF on demand.
